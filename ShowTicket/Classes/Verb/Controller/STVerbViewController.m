@@ -11,8 +11,9 @@
 #import "UIView+layout.h"
 #import "UIImage+color.h"
 #import "SelectCityButton.h"
-#import "CityListViewController.h"
-#import <QuartzCore/QuartzCore.h>
+//#import "CityListViewController.h"
+//#import "STCityViewController.h"
+#import "JFCityViewController.h"
 
 #define ScreenBounds [[UIScreen mainScreen] bounds]
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
@@ -22,6 +23,7 @@
 @interface STVerbViewController ()
 
 @property (nonatomic, strong) UIView *imageScorollView;
+@property (nonatomic, copy) NSString *cityName;
 
 @end
 
@@ -30,11 +32,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.frame = CGRectMake(0, [[UIApplication sharedApplication] statusBarFrame].size.height, self.view.frame.size.width, 44);
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     [self cofigNavagationBar];
     
     
@@ -43,7 +46,11 @@
 
 - (void)cofigNavagationBar {
     SelectCityButton *cityBtn = [SelectCityButton buttonWithType:UIButtonTypeCustom];
-    [cityBtn setTitle:@"北京" forState:UIControlStateNormal];
+    if (self.cityName ) {
+        [cityBtn setTitle:self.cityName forState:UIControlStateNormal];
+    }else {
+        [cityBtn setTitle:@"北京" forState:UIControlStateNormal];
+    }
     [cityBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cityBtn setImage:[UIImage imageNamed:@"btn_cityArrow"] forState:UIControlStateNormal];
     [cityBtn addTarget:self action:@selector(selectedCity) forControlEvents:UIControlEventTouchUpInside];
@@ -82,13 +89,13 @@
 }
 
 - (void)selectedCity {
-//    CityListViewController *cityViewController = [[CityListViewController alloc] init];
-////    cityViewController.delegate = self;
-//    cityViewController.title = @"城市列表";
-//    dispatch_async(dispatch_get_main_queue(), ^(void){
-//        UINavigationController  *navi = [[UINavigationController alloc]initWithRootViewController:cityViewController];
-//        [self presentViewController:navi animated:YES completion:NULL];
-//    });
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        JFCityViewController *city = [[JFCityViewController alloc] init];
+        city.locationCityName = @"北京";
+        UINavigationController  *navi = [[UINavigationController alloc]initWithRootViewController:city];
+        [self presentViewController:navi animated:YES completion:^{
+        }];
+    });
 }
 
 - (void)calendarShow {
@@ -98,15 +105,5 @@
 - (void)seachShow {
     
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
