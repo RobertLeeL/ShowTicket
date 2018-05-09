@@ -10,7 +10,7 @@
 #import <SDCycleScrollView.h>
 #import "STTitleButton.h"
 #import "UIView+layout.h"
-#import "STShowInformation.h"
+#import "STBannerInformation.h"
 
 #define ScreenBounds [[UIScreen mainScreen] bounds]
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
@@ -30,7 +30,7 @@
     if (self) {
         _scrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height / 2) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
         _scrollView.currentPageDotColor = [UIColor whiteColor];
-        _scrollView.imageURLStringsGroup = imageList;
+//        _scrollView.imageURLStringsGroup = imageList;
         [self addSubview:_scrollView];
         [self setup];
     }
@@ -39,8 +39,8 @@
 
 - (void)reloadImageScrollView {
     NSMutableArray *posterURLArray = [[NSMutableArray alloc] init];
-    for (STShowInformation *dict in self.dataArray) {
-        NSString *string = dict.posterURL;
+    for (STBannerInformation *dict in self.dataArray) {
+        NSString *string = dict.posterUrl;
         [posterURLArray addObject:string];
     }
     _scrollView.imageURLStringsGroup = posterURLArray;

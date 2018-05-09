@@ -131,7 +131,7 @@
 //            });
             _imageScorollView.dataArray = self.bannerDataArray;
             [_imageScorollView reloadImageScrollView];
-            [_imageScorollView.scrollView.mainView reloadData];
+            [_imageScorollView layoutSubviews];
                     }
     } failure:^(NSError *error) {
         NSLog(@"%@",error);

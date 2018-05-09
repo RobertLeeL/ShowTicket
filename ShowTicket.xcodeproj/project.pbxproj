@@ -32,6 +32,12 @@
 		07893B1E20A31A3C0092753C /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B1C20A31A3C0092753C /* HttpTool.m */; };
 		07893B2120A33EDA0092753C /* STBannerInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B2020A33EDA0092753C /* STBannerInformation.m */; };
 		07893B2420A340220092753C /* STBannerType.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B2320A340220092753C /* STBannerType.m */; };
+		07893B2720A34BEF0092753C /* STMineHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B2620A34BEF0092753C /* STMineHeaderView.m */; };
+		07893B2A20A34CBD0092753C /* UIBarButtonItem+initItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B2920A34CBD0092753C /* UIBarButtonItem+initItem.m */; };
+		07893B2D20A34D280092753C /* UIButton+extensionClick.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B2C20A34D280092753C /* UIButton+extensionClick.m */; };
+		07893B3020A352BC0092753C /* STDiscoveryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B2F20A352BC0092753C /* STDiscoveryTableViewCell.m */; };
+		07893B3320A3565C0092753C /* RefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B3220A3565C0092753C /* RefreshHeaderView.m */; };
+		07893B3620A358260092753C /* RefreshHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B3520A358260092753C /* RefreshHeadView.m */; };
 		07A5ADCC205FEA3800D90D99 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A5ADCB205FEA3800D90D99 /* AppDelegate.m */; };
 		07A5ADD4205FEA3800D90D99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07A5ADD3205FEA3800D90D99 /* Assets.xcassets */; };
 		07A5ADD7205FEA3800D90D99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07A5ADD5205FEA3800D90D99 /* LaunchScreen.storyboard */; };
@@ -118,6 +124,18 @@
 		07893B2020A33EDA0092753C /* STBannerInformation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STBannerInformation.m; sourceTree = "<group>"; };
 		07893B2220A340220092753C /* STBannerType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STBannerType.h; sourceTree = "<group>"; };
 		07893B2320A340220092753C /* STBannerType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STBannerType.m; sourceTree = "<group>"; };
+		07893B2520A34BEF0092753C /* STMineHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STMineHeaderView.h; sourceTree = "<group>"; };
+		07893B2620A34BEF0092753C /* STMineHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STMineHeaderView.m; sourceTree = "<group>"; };
+		07893B2820A34CBD0092753C /* UIBarButtonItem+initItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+initItem.h"; sourceTree = "<group>"; };
+		07893B2920A34CBD0092753C /* UIBarButtonItem+initItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+initItem.m"; sourceTree = "<group>"; };
+		07893B2B20A34D280092753C /* UIButton+extensionClick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+extensionClick.h"; sourceTree = "<group>"; };
+		07893B2C20A34D280092753C /* UIButton+extensionClick.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+extensionClick.m"; sourceTree = "<group>"; };
+		07893B2E20A352BC0092753C /* STDiscoveryTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STDiscoveryTableViewCell.h; sourceTree = "<group>"; };
+		07893B2F20A352BC0092753C /* STDiscoveryTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STDiscoveryTableViewCell.m; sourceTree = "<group>"; };
+		07893B3120A3565C0092753C /* RefreshHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RefreshHeaderView.h; sourceTree = "<group>"; };
+		07893B3220A3565C0092753C /* RefreshHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RefreshHeaderView.m; sourceTree = "<group>"; };
+		07893B3420A358260092753C /* RefreshHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RefreshHeadView.h; sourceTree = "<group>"; };
+		07893B3520A358260092753C /* RefreshHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RefreshHeadView.m; sourceTree = "<group>"; };
 		07A5ADC7205FEA3800D90D99 /* ShowTicket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShowTicket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07A5ADCA205FEA3800D90D99 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		07A5ADCB205FEA3800D90D99 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -362,6 +380,10 @@
 				07FCE0CD208CB90C00304C72 /* UIImage+color.m */,
 				07893A5B208CBCB10092753C /* UILabel+Width.h */,
 				07893A5C208CBCB10092753C /* UILabel+Width.m */,
+				07893B2820A34CBD0092753C /* UIBarButtonItem+initItem.h */,
+				07893B2920A34CBD0092753C /* UIBarButtonItem+initItem.m */,
+				07893B2B20A34D280092753C /* UIButton+extensionClick.h */,
+				07893B2C20A34D280092753C /* UIButton+extensionClick.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -506,6 +528,12 @@
 		07A5AE172069413200D90D99 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				07893B2E20A352BC0092753C /* STDiscoveryTableViewCell.h */,
+				07893B2F20A352BC0092753C /* STDiscoveryTableViewCell.m */,
+				07893B3120A3565C0092753C /* RefreshHeaderView.h */,
+				07893B3220A3565C0092753C /* RefreshHeaderView.m */,
+				07893B3420A358260092753C /* RefreshHeadView.h */,
+				07893B3520A358260092753C /* RefreshHeadView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -529,6 +557,8 @@
 		07A5AE1A2069414600D90D99 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				07893B2520A34BEF0092753C /* STMineHeaderView.h */,
+				07893B2620A34BEF0092753C /* STMineHeaderView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -754,16 +784,20 @@
 				07A5AE24206942F500D90D99 /* STMineViewController.m in Sources */,
 				07893AE220A015050092753C /* JFLocation.m in Sources */,
 				07A5AE2A2069434000D90D99 /* STNavigationViewController.m in Sources */,
+				07893B3020A352BC0092753C /* STDiscoveryTableViewCell.m in Sources */,
 				07A5AE0A20693F1C00D90D99 /* UIViewController+showHUD.m in Sources */,
 				07893B0B20A2BD900092753C /* STShowInformation.m in Sources */,
 				07893AE720A015050092753C /* JFCityTableViewCell.m in Sources */,
 				07893A5D208CBCB10092753C /* UILabel+Width.m in Sources */,
+				07893B3620A358260092753C /* RefreshHeadView.m in Sources */,
 				07893B1D20A31A3C0092753C /* HttpSessionManager.m in Sources */,
 				07893B0820A1D6680092753C /* STTitleButton.m in Sources */,
 				07893B2120A33EDA0092753C /* STBannerInformation.m in Sources */,
 				07A5AE072061323C00D90D99 /* STUserLocation.m in Sources */,
+				07893B2720A34BEF0092753C /* STMineHeaderView.m in Sources */,
 				07893AE320A015050092753C /* JFAreaDataManager.m in Sources */,
 				07FCE0CE208CB90C00304C72 /* UIImage+color.m in Sources */,
+				07893B2D20A34D280092753C /* UIButton+extensionClick.m in Sources */,
 				07893B1420A2D0AC0092753C /* STVerbTableViewCell.m in Sources */,
 				07893AE620A015050092753C /* JFCityViewController.m in Sources */,
 				07A5AE1E206942D900D90D99 /* STVerbViewController.m in Sources */,
@@ -771,6 +805,7 @@
 				07893B1E20A31A3C0092753C /* HttpTool.m in Sources */,
 				07893B1720A2D0C30092753C /* STVerbCollectionViewCell.m in Sources */,
 				07A5ADDA205FEA3800D90D99 /* main.m in Sources */,
+				07893B2A20A34CBD0092753C /* UIBarButtonItem+initItem.m in Sources */,
 				07893AE520A015050092753C /* JFSearchView.m in Sources */,
 				07893AE920A015050092753C /* JFButton.m in Sources */,
 				07A5AE272069430700D90D99 /* STDiscoveryViewController.m in Sources */,
@@ -781,6 +816,7 @@
 				07FCE0C8208CB70400304C72 /* UIColor+Hex.m in Sources */,
 				07893B0E20A2BF860092753C /* STShowType.m in Sources */,
 				07A5ADCC205FEA3800D90D99 /* AppDelegate.m in Sources */,
+				07893B3320A3565C0092753C /* RefreshHeaderView.m in Sources */,
 				07893AE420A015050092753C /* JFCityHeaderView.m in Sources */,
 				07A5ADFE205FEF2A00D90D99 /* STRootViewController.m in Sources */,
 			);
