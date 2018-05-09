@@ -20,11 +20,13 @@ PODS:
   - JTCalendar (2.2.2)
   - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
+  - MJRefresh (3.1.15.3)
   - SDCycleScrollView (1.75):
     - SDWebImage (>= 4.0.0)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
+  - YYModel (1.0.4)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
@@ -32,8 +34,10 @@ DEPENDENCIES:
   - JTCalendar (~> 2.2.2)
   - Masonry (~> 1.0.2)
   - MBProgressHUD (~> 1.0.0)
+  - MJRefresh (~> 3.1.15.3)
   - SDCycleScrollView (~> 1.75)
   - SDWebImage (~> 4.0.0)
+  - YYModel (~> 1.0.4)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -41,9 +45,11 @@ SPEC CHECKSUMS:
   JTCalendar: 20610270b29b309bab398f06fc9e2f1aed67a22c
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
   SDCycleScrollView: 884b88f0266dd4708a0e1934975c69cb971707b1
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
+  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: e9554080563c088390f4e2866121a3e8add0ada8
+PODFILE CHECKSUM: 879daa8f3df1e0c1a66a57cade483f76ef147088
 
 COCOAPODS: 1.2.0

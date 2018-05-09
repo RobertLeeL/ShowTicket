@@ -7,9 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SDCycleScrollView.h>
+
+@protocol STImageScrollViewDelegate <NSObject>
+- (void)didSelectedTitleButtonIndex:(NSInteger)index;
+@end
 
 @interface STImageScorollView : UIView
 
 - (instancetype)initWithFrame:(CGRect)frame imageList:(NSArray *)imageList;
+
+@property (nonatomic, weak) id<STImageScrollViewDelegate> delegate;
+@property (nonatomic, strong) SDCycleScrollView *scrollView;
+@property (nonatomic, strong) NSArray *dataArray;
+
+- (void)reloadImageScrollView;
 
 @end
