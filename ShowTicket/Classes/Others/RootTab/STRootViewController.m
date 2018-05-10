@@ -13,6 +13,7 @@
 #import "STVerbViewController.h"
 #import "STDiscoveryViewController.h"
 #import "STNavigationViewController.h"
+#import "STAllShowViewController.h"
 
 
 @interface STRootViewController ()
@@ -54,7 +55,10 @@
 - (void)setupChildViewControlers {
     [self setupChildVc:[[STVerbViewController alloc] init] title:@"精选" image:@"icon_tab1_normal" selectedImage:@"icon_tab1_selected"];
     
-    [self setupChildVc:[[STShowViewController alloc] init] title:@"演出" image:@"icon_tab2_normal" selectedImage:@"icon_tab2_selected"];
+    STAllShowViewController *vc = [[STAllShowViewController alloc] init];
+    vc.selectIndex = 0;
+    vc.menuViewStyle = WMMenuViewStyleLine;
+    [self setupChildVc:vc title:@"演出" image:@"icon_tab2_normal" selectedImage:@"icon_tab2_selected"];
     
     [self setupChildVc:[[STDiscoveryViewController alloc] init] title:@"发现" image:@"icon_tab3_normal" selectedImage:@"icon_tab3_selected"];
     

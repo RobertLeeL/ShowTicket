@@ -32,6 +32,8 @@
 @property (nonatomic, copy) NSString *cityName;
 @property (nonatomic, strong) UITableView *showTableView;
 
+@property (nonatomic, strong) SelectCityButton *cityBtn;
+
 @property (nonatomic, strong) NSMutableArray *bannerDataArray;
 @property (nonatomic, strong) NSMutableArray *hotShowDataArray;
 @property (nonatomic, strong) NSMutableArray *showDataArray;

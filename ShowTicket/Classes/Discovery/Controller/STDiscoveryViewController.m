@@ -15,6 +15,11 @@
 #import <MJRefresh.h>
 #import "STDiscoveryTableViewCell.h"
 #import <UIImageView+WebCache.h>
+#import "HttpTool.h"
+#import "STBannerInformation.h"
+#import <YYModel.h>
+#import "STWebViewController.h"
+#import "STAllShowViewController.h"
 
 
 
@@ -28,10 +33,17 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *headerImages;
 @property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, assign) NSInteger offset;
 
 @end
 
 @implementation STDiscoveryViewController
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setupNavbar];
+}
 
 - (NSMutableArray *)headerImages {
     if (!_headerImages) {
@@ -49,11 +61,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupNavbar];
+    
+    [self getData];
     self.view.backgroundColor = [UIColor whiteColor];
     
     _tableView = [[UITableView alloc] init];
-    _tableView.frame = ScreenBounds;
+    _tableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
     _tableView.delegate = self;
     _tableView.dataSource = self;
     // Set the callback（一Once you enter the refresh status，then call the action of target，that is call [self loadNewData]）
@@ -70,9 +83,33 @@
     // Set the refreshing state of animated images
     [header setImages:self.headerImages forState:MJRefreshStateRefreshing];
     // Set header
+    header.lastUpdatedTimeLabel.hidden = YES;
+    header.stateLabel.hidden = YES;
     _tableView.mj_header = header;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     // Do any additional setup after loading the view.
+}
+
+- (void)getData {
+    NSMutableArray *data = [[NSMutableArray alloc] init];
+    [HttpTool getUrlWithString:@"https://www.tking.cn/showapi/mobile/pub/site/1002/discovery?isSupportSession=1&length=10&offset=0&siteCityOID=1101&src=ios&timeinterval=1521381243&ver=4.1.0" parameters:nil success:^(id responseObject) {
+        if (responseObject) {
+            //            NSLog(@"%@",responseObject);
+            NSDictionary *dict = responseObject[@"result"];
+            NSArray *array = dict[@"data"];
+            for (NSDictionary *dataDict in array) {
+                STBannerInformation *cell = [STBannerInformation yy_modelWithDictionary:dataDict];
+                if (cell) {
+                    [data addObject:cell];
+                }
+            }
+            [self.dataArray addObjectsFromArray:data];
+            [_tableView reloadData];
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
 }
 
 - (void)setupNavbar {
@@ -124,11 +161,18 @@
 }
 
 - (void)seachShow {
-    
+    for (UIViewController *con in self.tabBarController.viewControllers) {
+        if ([con isKindOfClass:[STAllShowViewController class]]) {
+            self.tabBarController.selectedViewController = con;
+        }
+    }
+//    self.tabBarController.selectedIndex = 1;
 }
 
 - (void)loadNewData {
-    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [_tableView.mj_header endRefreshing];
+    });
 }
 
 
@@ -139,7 +183,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 120;
+    return 170 * ScreenWidth / 375 ;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -148,9 +192,18 @@
     if (!cell) {
         cell = [[STDiscoveryTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
-    cell.desLabel.text = self.dataArray[indexPath.row];
-    [cell.image sd_setImageWithURL:@"" placeholderImage:@""];
+    STBannerInformation *model = self.dataArray[indexPath.row];
+    cell.desLabel.text = model.description;
+    [cell.image sd_setImageWithURL:[NSURL URLWithString:model.posterUrl] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    STBannerInformation *model = self.dataArray[indexPath.row];
+    STWebViewController *webVC = [[STWebViewController alloc] init];
+    webVC.url = model.bannerUrl;
+    webVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 /*
 #pragma mark - Navigation

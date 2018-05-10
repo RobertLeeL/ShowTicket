@@ -19,27 +19,27 @@
 
 - (void)setup {
     _image = [[UIImageView alloc] init];
-    _image.contentMode = UIViewContentModeScaleAspectFill;
+    _image.contentMode = UIViewContentModeScaleAspectFit;
     [self.contentView addSubview:_image];
     
     _desLabel = [[UILabel alloc] init];
     _desLabel.font = [UIFont systemFontOfSize:11.0];
     _desLabel.textColor = [UIColor blackColor];
-    [self.contentView addSubview:_desLabel];
+//    [self.contentView addSubview:_desLabel];
     
     [_image mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.contentView.mas_left).mas_offset(10);
         make.right.mas_equalTo(self.contentView.mas_right).mas_offset(-10);
-        make.top.mas_equalTo(self.contentView.mas_top).mas_offset(10);
-        make.height.mas_equalTo(90);
+        make.top.mas_equalTo(self.contentView.mas_top).mas_offset(0);
+        make.height.mas_equalTo(self.contentView.mas_height);
     }];
     
-    [_desLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_image.mas_left);
-        make.right.mas_equalTo(_image.mas_right);
-        make.top.mas_equalTo(self.contentView.mas_top).mas_offset(5);
-        make.height.mas_equalTo(15);
-    }];
+//    [_desLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(_image.mas_left);
+//        make.right.mas_equalTo(_image.mas_right);
+//        make.top.mas_equalTo(self.contentView.mas_top).mas_offset(5);
+//        make.height.mas_equalTo(15);
+//    }];
 }
 
 - (void)awakeFromNib {
