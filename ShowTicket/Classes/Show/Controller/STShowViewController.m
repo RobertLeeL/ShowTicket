@@ -129,6 +129,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     STShowDetailViewController *vc = [[STShowDetailViewController alloc] init];
     vc.model = self.dataArray[indexPath.row];
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

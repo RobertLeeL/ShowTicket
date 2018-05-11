@@ -25,9 +25,13 @@
 
 @implementation STAllShowViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    [self setupNavbar];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupNavbar];
     self.menuView.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
 }
@@ -64,6 +68,7 @@
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"#F4153D"] size:CGSizeMake(ScreenWidth, 64)] forBarMetrics:UIBarMetricsDefault];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

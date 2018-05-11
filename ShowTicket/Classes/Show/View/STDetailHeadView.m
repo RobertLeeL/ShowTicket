@@ -12,6 +12,7 @@
 
 @interface STDetailHeadView ()
 @property (nonatomic, strong) STShowModel *model;
+@property (nonatomic, strong) UIImageView *bgImage;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UILabel *showName;
 @property (nonatomic, strong) UILabel *showDate;
@@ -24,8 +25,11 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     _effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-    _effectView.frame = frame;
-    [self addSubview:_effectView];
+    _effectView.frame = CGRectMake(0, -200, frame.size.width, frame.size.height + 200);
+//    [self addSubview:_effectView];
+    _bgImage  = [[UIImageView alloc] init];
+    _bgImage.frame = CGRectMake(0, -200, frame.size.width, frame.size.height + 200);
+    _bgImage.contentMode = UIViewContentModeBottom;
     [self setup];
     return self;
 }
@@ -50,20 +54,23 @@
     [self addSubview:_showName];
     [self addSubview:_showDate];
     [self addSubview:_price];
-    [self sendSubviewToBack:_effectView];
+    self.backgroundColor = [UIColor clearColor];
+//    [self sendSubviewToBack:_effectView];
+//    [self addSubview:_bgImage];
+//    [self sendSubviewToBack:_bgImage];
     
     [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.mas_left).mas_offset(10);
+        make.left.mas_equalTo(self.mas_left).mas_offset(15);
         make.bottom.mas_equalTo(self.mas_bottom).mas_offset(-20);
-        make.width.mas_equalTo(50);
-        make.height.mas_equalTo(80);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(90);
     }];
     
     [_showName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_imageView.mas_right).mas_offset(10);
+        make.left.mas_equalTo(_imageView.mas_right).mas_offset(20);
         make.top.mas_equalTo(_imageView.mas_top);
-        make.right.mas_equalTo(self.mas_right).mas_offset(10);
-        make.height.mas_equalTo(35);
+        make.right.mas_equalTo(self.mas_right).mas_offset(-20);
+        make.height.mas_equalTo(40);
     }];
     
     [_showDate mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -74,7 +81,7 @@
     }];
     
     [_price mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_showName.mas_left).mas_offset(10);
+        make.left.mas_equalTo(_showName.mas_left);
         make.bottom.mas_equalTo(_imageView.mas_bottom);
         make.right.mas_equalTo(_showDate.mas_right);
         make.height.mas_equalTo(20);
@@ -88,6 +95,7 @@
         _showName.text = _model.showName;
         _showDate.text = _model.showDate;
         _price.text = [NSString stringWithFormat:@"%@元起",_model.minPrice];
+//        [_bgImage sd_setImageWithURL:[NSURL URLWithString:_model.posterURL]];    }
     }
 }
 

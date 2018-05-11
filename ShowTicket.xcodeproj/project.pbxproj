@@ -43,10 +43,10 @@
 		07893B4820A442540092753C /* STShowTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B4720A442540092753C /* STShowTableViewCell.m */; };
 		07893B4B20A47E2B0092753C /* STShowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B4A20A47E2B0092753C /* STShowModel.m */; };
 		07893B4E20A493A90092753C /* STShowDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B4D20A493A90092753C /* STShowDetailViewController.m */; };
-		07893B5320A4B2F30092753C /* STStretchableTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B5220A4B2F30092753C /* STStretchableTableHeaderView.m */; };
-		07893B5920A4B62E0092753C /* STDetailNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B5820A4B62E0092753C /* STDetailNavBarView.m */; };
-		07893B5F20A4B6CF0092753C /* STDetailNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07893B5E20A4B6CE0092753C /* STDetailNavBarView.xib */; };
 		07893B6220A4BC150092753C /* STDetailHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B6120A4BC150092753C /* STDetailHeadView.m */; };
+		07893B6820A588770092753C /* STDetailBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B6720A588770092753C /* STDetailBottomView.m */; };
+		07893B6B20A5AB530092753C /* STShowDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B6A20A5AB530092753C /* STShowDetailModel.m */; };
+		07893B6E20A5B4680092753C /* STShowDetailLocationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B6D20A5B4680092753C /* STShowDetailLocationTableViewCell.m */; };
 		07A5ADCC205FEA3800D90D99 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A5ADCB205FEA3800D90D99 /* AppDelegate.m */; };
 		07A5ADD4205FEA3800D90D99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07A5ADD3205FEA3800D90D99 /* Assets.xcassets */; };
 		07A5ADD7205FEA3800D90D99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07A5ADD5205FEA3800D90D99 /* LaunchScreen.storyboard */; };
@@ -155,13 +155,14 @@
 		07893B4A20A47E2B0092753C /* STShowModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STShowModel.m; sourceTree = "<group>"; };
 		07893B4C20A493A90092753C /* STShowDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STShowDetailViewController.h; sourceTree = "<group>"; };
 		07893B4D20A493A90092753C /* STShowDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STShowDetailViewController.m; sourceTree = "<group>"; };
-		07893B5120A4B2F30092753C /* STStretchableTableHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STStretchableTableHeaderView.h; sourceTree = "<group>"; };
-		07893B5220A4B2F30092753C /* STStretchableTableHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STStretchableTableHeaderView.m; sourceTree = "<group>"; };
-		07893B5720A4B62E0092753C /* STDetailNavBarView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STDetailNavBarView.h; sourceTree = "<group>"; };
-		07893B5820A4B62E0092753C /* STDetailNavBarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STDetailNavBarView.m; sourceTree = "<group>"; };
-		07893B5E20A4B6CE0092753C /* STDetailNavBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STDetailNavBarView.xib; sourceTree = "<group>"; };
 		07893B6020A4BC150092753C /* STDetailHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STDetailHeadView.h; sourceTree = "<group>"; };
 		07893B6120A4BC150092753C /* STDetailHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STDetailHeadView.m; sourceTree = "<group>"; };
+		07893B6620A588770092753C /* STDetailBottomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STDetailBottomView.h; sourceTree = "<group>"; };
+		07893B6720A588770092753C /* STDetailBottomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STDetailBottomView.m; sourceTree = "<group>"; };
+		07893B6920A5AB530092753C /* STShowDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STShowDetailModel.h; sourceTree = "<group>"; };
+		07893B6A20A5AB530092753C /* STShowDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STShowDetailModel.m; sourceTree = "<group>"; };
+		07893B6C20A5B4680092753C /* STShowDetailLocationTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STShowDetailLocationTableViewCell.h; sourceTree = "<group>"; };
+		07893B6D20A5B4680092753C /* STShowDetailLocationTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STShowDetailLocationTableViewCell.m; sourceTree = "<group>"; };
 		07A5ADC7205FEA3800D90D99 /* ShowTicket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShowTicket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07A5ADCA205FEA3800D90D99 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		07A5ADCB205FEA3800D90D99 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -537,13 +538,12 @@
 			children = (
 				07893B4620A442540092753C /* STShowTableViewCell.h */,
 				07893B4720A442540092753C /* STShowTableViewCell.m */,
-				07893B5120A4B2F30092753C /* STStretchableTableHeaderView.h */,
-				07893B5220A4B2F30092753C /* STStretchableTableHeaderView.m */,
-				07893B5720A4B62E0092753C /* STDetailNavBarView.h */,
-				07893B5820A4B62E0092753C /* STDetailNavBarView.m */,
-				07893B5E20A4B6CE0092753C /* STDetailNavBarView.xib */,
 				07893B6020A4BC150092753C /* STDetailHeadView.h */,
 				07893B6120A4BC150092753C /* STDetailHeadView.m */,
+				07893B6620A588770092753C /* STDetailBottomView.h */,
+				07893B6720A588770092753C /* STDetailBottomView.m */,
+				07893B6C20A5B4680092753C /* STShowDetailLocationTableViewCell.h */,
+				07893B6D20A5B4680092753C /* STShowDetailLocationTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -553,6 +553,8 @@
 			children = (
 				07893B4920A47E2B0092753C /* STShowModel.h */,
 				07893B4A20A47E2B0092753C /* STShowModel.m */,
+				07893B6920A5AB530092753C /* STShowDetailModel.h */,
+				07893B6A20A5AB530092753C /* STShowDetailModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -746,7 +748,6 @@
 			files = (
 				07893AEA20A015050092753C /* citydict.plist in Resources */,
 				07893AEB20A015050092753C /* shop_area.sqlite in Resources */,
-				07893B5F20A4B6CF0092753C /* STDetailNavBarView.xib in Resources */,
 				07A5ADD7205FEA3800D90D99 /* LaunchScreen.storyboard in Resources */,
 				07A5ADD4205FEA3800D90D99 /* Assets.xcassets in Resources */,
 			);
@@ -821,6 +822,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07893B6E20A5B4680092753C /* STShowDetailLocationTableViewCell.m in Sources */,
 				07893AE120A015050092753C /* JFCityCollectionViewCell.m in Sources */,
 				07893A5A208CBC480092753C /* SelectCityButton.m in Sources */,
 				07FCE0CB208CB76700304C72 /* UIView+layout.m in Sources */,
@@ -835,7 +837,7 @@
 				07893AE720A015050092753C /* JFCityTableViewCell.m in Sources */,
 				07893A5D208CBCB10092753C /* UILabel+Width.m in Sources */,
 				07893B3620A358260092753C /* RefreshHeadView.m in Sources */,
-				07893B5320A4B2F30092753C /* STStretchableTableHeaderView.m in Sources */,
+				07893B6B20A5AB530092753C /* STShowDetailModel.m in Sources */,
 				07893B1D20A31A3C0092753C /* HttpSessionManager.m in Sources */,
 				07893B0820A1D6680092753C /* STTitleButton.m in Sources */,
 				07893B2120A33EDA0092753C /* STBannerInformation.m in Sources */,
@@ -854,9 +856,9 @@
 				07893B1E20A31A3C0092753C /* HttpTool.m in Sources */,
 				07893B1720A2D0C30092753C /* STVerbCollectionViewCell.m in Sources */,
 				07A5ADDA205FEA3800D90D99 /* main.m in Sources */,
+				07893B6820A588770092753C /* STDetailBottomView.m in Sources */,
 				07893B2A20A34CBD0092753C /* UIBarButtonItem+initItem.m in Sources */,
 				07893AE520A015050092753C /* JFSearchView.m in Sources */,
-				07893B5920A4B62E0092753C /* STDetailNavBarView.m in Sources */,
 				07893AE920A015050092753C /* JFButton.m in Sources */,
 				07A5AE272069430700D90D99 /* STDiscoveryViewController.m in Sources */,
 				07893B4E20A493A90092753C /* STShowDetailViewController.m in Sources */,
