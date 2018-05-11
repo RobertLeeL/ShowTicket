@@ -11,16 +11,17 @@
 
 @protocol STImageScrollViewDelegate <NSObject>
 - (void)didSelectedTitleButtonIndex:(NSInteger)index;
+- (void)didsSelectedImageIndex:(NSInteger)index;
 @end
 
 @interface STImageScorollView : UIView
 
-- (instancetype)initWithFrame:(CGRect)frame imageList:(NSArray *)imageList;
 
 @property (nonatomic, weak) id<STImageScrollViewDelegate> delegate;
 @property (nonatomic, strong) SDCycleScrollView *scrollView;
 @property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, strong) NSArray *imagesURLStrings;
 
-- (void)reloadImageScrollView;
+//- (void)reloadImageScrollView;
 
 @end

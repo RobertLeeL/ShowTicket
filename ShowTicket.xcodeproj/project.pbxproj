@@ -47,6 +47,11 @@
 		07893B6820A588770092753C /* STDetailBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B6720A588770092753C /* STDetailBottomView.m */; };
 		07893B6B20A5AB530092753C /* STShowDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B6A20A5AB530092753C /* STShowDetailModel.m */; };
 		07893B6E20A5B4680092753C /* STShowDetailLocationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B6D20A5B4680092753C /* STShowDetailLocationTableViewCell.m */; };
+		07893B7120A5CA490092753C /* STShowDetailVerbTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B7020A5CA490092753C /* STShowDetailVerbTableViewCell.m */; };
+		07893B7420A5D1F30092753C /* STShowIntroductionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B7320A5D1F30092753C /* STShowIntroductionViewController.m */; };
+		07893B7E20A5D69F0092753C /* NSObject+BARunTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B7620A5D69F0092753C /* NSObject+BARunTime.m */; };
+		07893B7F20A5D69F0092753C /* UIAlertController+BAKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B7820A5D69F0092753C /* UIAlertController+BAKit.m */; };
+		07893B8020A5D69F0092753C /* NSMutableAttributedString+BAKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 07893B7D20A5D69F0092753C /* NSMutableAttributedString+BAKit.m */; };
 		07A5ADCC205FEA3800D90D99 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A5ADCB205FEA3800D90D99 /* AppDelegate.m */; };
 		07A5ADD4205FEA3800D90D99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07A5ADD3205FEA3800D90D99 /* Assets.xcassets */; };
 		07A5ADD7205FEA3800D90D99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07A5ADD5205FEA3800D90D99 /* LaunchScreen.storyboard */; };
@@ -163,6 +168,18 @@
 		07893B6A20A5AB530092753C /* STShowDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STShowDetailModel.m; sourceTree = "<group>"; };
 		07893B6C20A5B4680092753C /* STShowDetailLocationTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STShowDetailLocationTableViewCell.h; sourceTree = "<group>"; };
 		07893B6D20A5B4680092753C /* STShowDetailLocationTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STShowDetailLocationTableViewCell.m; sourceTree = "<group>"; };
+		07893B6F20A5CA490092753C /* STShowDetailVerbTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STShowDetailVerbTableViewCell.h; sourceTree = "<group>"; };
+		07893B7020A5CA490092753C /* STShowDetailVerbTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STShowDetailVerbTableViewCell.m; sourceTree = "<group>"; };
+		07893B7220A5D1F30092753C /* STShowIntroductionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STShowIntroductionViewController.h; sourceTree = "<group>"; };
+		07893B7320A5D1F30092753C /* STShowIntroductionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STShowIntroductionViewController.m; sourceTree = "<group>"; };
+		07893B7620A5D69F0092753C /* NSObject+BARunTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+BARunTime.m"; sourceTree = "<group>"; };
+		07893B7720A5D69F0092753C /* BAKit_ConfigurationDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BAKit_ConfigurationDefine.h; sourceTree = "<group>"; };
+		07893B7820A5D69F0092753C /* UIAlertController+BAKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+BAKit.m"; sourceTree = "<group>"; };
+		07893B7920A5D69F0092753C /* BAAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BAAlertController.h; sourceTree = "<group>"; };
+		07893B7A20A5D69F0092753C /* NSMutableAttributedString+BAKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+BAKit.h"; sourceTree = "<group>"; };
+		07893B7B20A5D69F0092753C /* NSObject+BARunTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+BARunTime.h"; sourceTree = "<group>"; };
+		07893B7C20A5D69F0092753C /* UIAlertController+BAKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+BAKit.h"; sourceTree = "<group>"; };
+		07893B7D20A5D69F0092753C /* NSMutableAttributedString+BAKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+BAKit.m"; sourceTree = "<group>"; };
 		07A5ADC7205FEA3800D90D99 /* ShowTicket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShowTicket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07A5ADCA205FEA3800D90D99 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		07A5ADCB205FEA3800D90D99 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -240,6 +257,7 @@
 		07893AC920A015040092753C /* JFCityViewController */ = {
 			isa = PBXGroup;
 			children = (
+				07893B7520A5D69F0092753C /* BAAlertController */,
 				07893ACA20A015040092753C /* JFCityCollectionFlowLayout.h */,
 				07893ACB20A015040092753C /* JFCityCollectionViewCell.m */,
 				07893ACC20A015040092753C /* Location */,
@@ -298,6 +316,21 @@
 				07893B1C20A31A3C0092753C /* HttpTool.m */,
 			);
 			path = HttpTool;
+			sourceTree = "<group>";
+		};
+		07893B7520A5D69F0092753C /* BAAlertController */ = {
+			isa = PBXGroup;
+			children = (
+				07893B7620A5D69F0092753C /* NSObject+BARunTime.m */,
+				07893B7720A5D69F0092753C /* BAKit_ConfigurationDefine.h */,
+				07893B7820A5D69F0092753C /* UIAlertController+BAKit.m */,
+				07893B7920A5D69F0092753C /* BAAlertController.h */,
+				07893B7A20A5D69F0092753C /* NSMutableAttributedString+BAKit.h */,
+				07893B7B20A5D69F0092753C /* NSObject+BARunTime.h */,
+				07893B7C20A5D69F0092753C /* UIAlertController+BAKit.h */,
+				07893B7D20A5D69F0092753C /* NSMutableAttributedString+BAKit.m */,
+			);
+			path = BAAlertController;
 			sourceTree = "<group>";
 		};
 		07A5ADBE205FEA3800D90D99 = {
@@ -529,6 +562,8 @@
 				07893B4420A430BD0092753C /* STAllShowViewController.m */,
 				07893B4C20A493A90092753C /* STShowDetailViewController.h */,
 				07893B4D20A493A90092753C /* STShowDetailViewController.m */,
+				07893B7220A5D1F30092753C /* STShowIntroductionViewController.h */,
+				07893B7320A5D1F30092753C /* STShowIntroductionViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -544,6 +579,8 @@
 				07893B6720A588770092753C /* STDetailBottomView.m */,
 				07893B6C20A5B4680092753C /* STShowDetailLocationTableViewCell.h */,
 				07893B6D20A5B4680092753C /* STShowDetailLocationTableViewCell.m */,
+				07893B6F20A5CA490092753C /* STShowDetailVerbTableViewCell.h */,
+				07893B7020A5CA490092753C /* STShowDetailVerbTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -831,12 +868,14 @@
 				07A5AE24206942F500D90D99 /* STMineViewController.m in Sources */,
 				07893AE220A015050092753C /* JFLocation.m in Sources */,
 				07A5AE2A2069434000D90D99 /* STNavigationViewController.m in Sources */,
+				07893B7E20A5D69F0092753C /* NSObject+BARunTime.m in Sources */,
 				07893B3020A352BC0092753C /* STDiscoveryTableViewCell.m in Sources */,
 				07A5AE0A20693F1C00D90D99 /* UIViewController+showHUD.m in Sources */,
 				07893B0B20A2BD900092753C /* STShowInformation.m in Sources */,
 				07893AE720A015050092753C /* JFCityTableViewCell.m in Sources */,
 				07893A5D208CBCB10092753C /* UILabel+Width.m in Sources */,
 				07893B3620A358260092753C /* RefreshHeadView.m in Sources */,
+				07893B7F20A5D69F0092753C /* UIAlertController+BAKit.m in Sources */,
 				07893B6B20A5AB530092753C /* STShowDetailModel.m in Sources */,
 				07893B1D20A31A3C0092753C /* HttpSessionManager.m in Sources */,
 				07893B0820A1D6680092753C /* STTitleButton.m in Sources */,
@@ -872,7 +911,10 @@
 				07893B3920A3E6EB0092753C /* STWebViewController.m in Sources */,
 				07893B3320A3565C0092753C /* RefreshHeaderView.m in Sources */,
 				07893AE420A015050092753C /* JFCityHeaderView.m in Sources */,
+				07893B8020A5D69F0092753C /* NSMutableAttributedString+BAKit.m in Sources */,
 				07A5ADFE205FEF2A00D90D99 /* STRootViewController.m in Sources */,
+				07893B7120A5CA490092753C /* STShowDetailVerbTableViewCell.m in Sources */,
+				07893B7420A5D1F30092753C /* STShowIntroductionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

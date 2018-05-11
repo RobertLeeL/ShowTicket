@@ -13,7 +13,7 @@
 @protocol STVerbTableViewCellDelegate <NSObject>
 
 - (void)CustomCollection:(UICollectionView *)collectionView didSelectRowAtIndexPath:(NSIndexPath *)indexPath model:(STShowInformation *)model;
-- (void)didSelectMoreButton;
+- (void)didSelectMoreButtonAtIndexPath:(NSIndexPath *)indexPath ;
 @end
 
 
@@ -23,5 +23,5 @@
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, weak) id<STVerbTableViewCellDelegate> delegate;
 @property (nonatomic, strong) UICollectionView *collectionView;
-
+@property (nonatomic, strong) NSIndexPath *indexPath;
 @end

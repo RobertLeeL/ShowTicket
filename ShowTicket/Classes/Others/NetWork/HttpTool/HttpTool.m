@@ -8,12 +8,17 @@
 
 #import "HttpTool.h"
 #import "HttpSessionManager.h"
+#import <AFNetworking.h>
 
 @implementation HttpTool
 
 + (void)getUrlWithString:(NSString *)url parameters:(id)parameters success:(void (^)(id))success failure:(void (^)(NSError *))failure
 {
     HttpSessionManager *manager = [HttpSessionManager shareManager];
+    AFSecurityPolicy *securityplicy = [AFSecurityPolicy defaultPolicy];
+    securityplicy.allowInvalidCertificates = YES;
+    securityplicy.validatesDomainName = NO;
+    manager.securityPolicy = securityplicy;
     [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
     [manager.requestSerializer setValue:@"application/x-www-form-urlencoded;charset=utf-8" forHTTPHeaderField:@"Content-Type"];

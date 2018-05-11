@@ -25,6 +25,7 @@ static id _instace;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _instace = [[self alloc] init];
+        
     });
     return _instace;
 }

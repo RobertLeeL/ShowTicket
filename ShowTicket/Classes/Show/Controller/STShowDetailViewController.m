@@ -17,8 +17,11 @@
 #import <YYModel.h>
 #import "STShowDetailModel.h"
 #import "STShowDetailLocationTableViewCell.h"
+#import "STShowDetailVerbTableViewCell.h"
+#import "UIViewController+showHUD.h"
+#import "STShowIntroductionViewController.h"
 
-@interface STShowDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface STShowDetailViewController ()<UITableViewDelegate,UITableViewDataSource,STShowDetailVerbTableViewCellDelegate>
 
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
@@ -30,6 +33,7 @@
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableArray *verbDataArray;
 @property (nonatomic, strong) STShowDetailModel *detailModel;
+@property (nonatomic, strong) UIView *bottomView;
 
 @end
 
@@ -115,6 +119,9 @@ static char kWRStatusBarStyleKey;
     if (button.tag == 0) {
         [self.navigationController popViewControllerAnimated:YES];
     }
+    else {
+        [self showHUD:@"点击喜欢或者分享按钮"];
+    }
 }
 
 - (void)configUI {
@@ -137,6 +144,32 @@ static char kWRStatusBarStyleKey;
     self.tableView.tableHeaderView = _topView;
     self.tableView.sectionHeaderHeight = 5;
     
+    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight - 44, ScreenWidth, 44)];
+    UIButton *askButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [askButton setImage:[UIImage imageNamed:@"ask_none"] forState:UIControlStateNormal];
+    askButton.frame = CGRectMake(20, 7, 30, 30);
+    [askButton addTarget:self action:@selector(didClickAskButton) forControlEvents:UIControlEventTouchUpInside];
+    [_bottomView addSubview:askButton];
+    
+    UIButton *buyTicketButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    buyTicketButton.frame = CGRectMake(90, 7,ScreenWidth - 100, 30);
+    [buyTicketButton setTitle:@"购买" forState:UIControlStateNormal];
+    [buyTicketButton addTarget:self action:@selector(didBuyTicketButton) forControlEvents:UIControlEventTouchUpInside];
+    [buyTicketButton setBackgroundColor:[UIColor redColor]];
+    [buyTicketButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    buyTicketButton.layer.cornerRadius = 5;
+    buyTicketButton.layer.masksToBounds = YES;
+    [_bottomView addSubview:buyTicketButton];
+    
+    [self.view addSubview:_bottomView];
+}
+
+- (void)didClickAskButton {
+    [self showHUD:@"点击人工服务"];
+}
+
+- (void)didBuyTicketButton {
+    [self showHUD:@"点击购票"];
 }
 
 - (void)getVerbDataArray {
@@ -193,7 +226,7 @@ static char kWRStatusBarStyleKey;
     if (section == 0 || section == 1) {
         return 2;
     } else {
-        return self.verbDataArray.count;
+        return 1;
     }
 }
 
@@ -204,8 +237,39 @@ static char kWRStatusBarStyleKey;
         } else {
             return 40;
         }
+    } else if (indexPath.section == 1) {
+        return 44;
+    } else if (indexPath.section == 2) {
+        return self.verbDataArray.count ? 30 + self.verbDataArray.count * 150 : 30;
     }
     return 44;
+}
+
+- (void)didSelctedCellIndex:(NSInteger)index {
+    STShowDetailViewController *vc = [[STShowDetailViewController alloc] init];
+    vc.model = self.verbDataArray[index];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            [self showHUD:@"进入演出地址导航界面"];
+        }
+    } else if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            STShowIntroductionViewController *vc = [[STShowIntroductionViewController alloc] init];
+            vc.title = @"项目介绍";
+            NSString *headStr = @"<head><style>img{width:100% !important}</style></head>";
+            NSString *body = _detailModel.content;
+            NSString *htmlURlStr = [NSString stringWithFormat:@"%@<body style='background-color:#ffffff'>%@</body>", headStr, body];
+            [vc ba_web_loadHTMLString:htmlURlStr];
+            [self.navigationController pushViewController:vc animated:YES];
+        } else {
+            [self showHUD:@"点击了购票提示"];
+        }
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -222,6 +286,7 @@ static char kWRStatusBarStyleKey;
             UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
             cell.imageView.image = [UIImage imageNamed:@"ticklet_parking"];
             cell.textLabel.text = @"快递送票";
+            cell.userInteractionEnabled = YES;
             return cell;
         }
     } else if (indexPath.section == 1) {
@@ -233,6 +298,13 @@ static char kWRStatusBarStyleKey;
             cell.textLabel.text = @"购票提示";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
+        return cell;
+    } else if (indexPath.section == 2) {
+        STShowDetailVerbTableViewCell *cell = [[STShowDetailVerbTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"verbDetailCell2"];
+        cell.delegate = self;
+        cell.dataArray = self.verbDataArray;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [cell.tableView reloadData];
         return cell;
     }
     

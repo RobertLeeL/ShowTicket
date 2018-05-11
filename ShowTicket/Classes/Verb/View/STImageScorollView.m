@@ -25,26 +25,29 @@
 
 @implementation STImageScorollView
 
-- (instancetype)initWithFrame:(CGRect)frame imageList:(NSArray *)imageList {
+- (instancetype)initWithFrame:(CGRect)frame {
    self =  [super initWithFrame:frame];
     if (self) {
         _scrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height / 2) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
         _scrollView.currentPageDotColor = [UIColor whiteColor];
-//        _scrollView.imageURLStringsGroup = imageList;
         [self addSubview:_scrollView];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            _scrollView.imageURLStringsGroup = self.imagesURLStrings;
+        });
+        
         [self setup];
     }
     return self;
 }
 
-- (void)reloadImageScrollView {
-    NSMutableArray *posterURLArray = [[NSMutableArray alloc] init];
-    for (STBannerInformation *dict in self.dataArray) {
-        NSString *string = dict.posterUrl;
-        [posterURLArray addObject:string];
-    }
-    _scrollView.imageURLStringsGroup = posterURLArray;
-}
+//- (void)reloadImageScrollView {
+//    NSMutableArray *posterURLArray = [[NSMutableArray alloc] init];
+//    for (STBannerInformation *dict in self.dataArray) {
+//        NSString *string = dict.posterUrl;
+//        [posterURLArray addObject:string];
+//    }
+//    _scrollView.imageURLStringsGroup = posterURLArray;
+//}
 
 - (void)setup {
     NSArray *array = @[@"演唱会",@"话剧歌剧",@"音乐会",@"体育赛事",@"舞蹈芭蕾",@"儿童亲子",@"展览休闲",@"曲艺杂谈"];
@@ -70,10 +73,17 @@
 - (void)clickButton:(id)sender {
     UIButton *button = sender;
     NSInteger index = button.tag;
-    NSLog(@"%ld",index);
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectedTitleButtonIndex:)]) {
-//        [self.delegate didSelectedTitleButtonIndex:index];
-//    }
+//    NSLog(@"%ld",index);
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectedTitleButtonIndex:)]) {
+        [self.delegate didSelectedTitleButtonIndex:index];
+    }
+}
+
+/** 点击图片回调 */
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didsSelectedImageIndex:)]) {
+        [self.delegate didsSelectedImageIndex:index];
+    }
 }
 
 @end

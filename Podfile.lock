@@ -14,6 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - BAWKWebView (1.0.8)
   - FMDB (2.7.2):
     - FMDB/standard (= 2.7.2)
   - FMDB/standard (2.7.2)
@@ -33,6 +34,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
+  - BAWKWebView
   - FMDB (~> 2.7.2)
   - JTCalendar (~> 2.2.2)
   - Masonry (~> 1.0.2)
@@ -46,6 +48,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  BAWKWebView: 63bb0ef2b3b653a3d9ded58d9c1061003f1af827
   FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
   JTCalendar: 20610270b29b309bab398f06fc9e2f1aed67a22c
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
@@ -57,6 +60,6 @@ SPEC CHECKSUMS:
   YTKKeyValueStore: 4d002941540dd5108fa23009b71e0f2f937f7a0f
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: ece9adb00529209e84a119c134548c21bd0eec0e
+PODFILE CHECKSUM: fceaa68a1d0fa2c16054559d3a56453bfbb2ca95
 
 COCOAPODS: 1.2.0

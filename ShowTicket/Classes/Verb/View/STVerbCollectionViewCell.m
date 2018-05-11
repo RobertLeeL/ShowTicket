@@ -31,6 +31,7 @@
 - (void)setup {
     _image = [[UIImageView alloc] init];
     _showName = [[UILabel alloc] init];
+    _showName.textColor = [UIColor blackColor];
     _showDate = [[UILabel alloc] init];
     _price = [[UILabel alloc] init];
     
@@ -47,10 +48,10 @@
     }];
     
     [_showName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_image.mas_bottom).mas_offset(5);
+        make.top.mas_equalTo(_image.mas_bottom).mas_offset(15);
         make.left.mas_equalTo(_image.mas_left);
         make.right.mas_equalTo(_image.mas_right);
-        make.height.mas_offset(30);
+        make.height.mas_offset(40);
     }];
     
     [_showDate mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -70,14 +71,14 @@
 
 - (void)initWithModel:(STShowInformation *)model {
     _model = model;
-    if (_model.showName.length) {
+    if (_model) {
         NSURL *url = [NSURL URLWithString:_model.posterURL];
         [_image sd_setImageWithURL:url];
         _image.contentMode = UIViewContentModeScaleAspectFill;
         
         _showName.text = model.showName;
         _showName.numberOfLines = 2;
-        _showName.font = [UIFont systemFontOfSize:14];
+        _showName.font = [UIFont systemFontOfSize:12];
         
         _showDate.text = model.showDate;
         _showDate.font = [UIFont systemFontOfSize:9];

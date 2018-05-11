@@ -122,6 +122,7 @@
     if (!cell) {
         cell = [[STShowTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell initWithModel:self.dataArray[indexPath.row]];
     return cell;
 }
