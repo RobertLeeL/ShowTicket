@@ -10,6 +10,9 @@
 #import <Masonry.h>
 #import "STVerbCollectionViewCell.h"
 
+#define ScreenWidth [[UIScreen mainScreen] bounds].size.width
+#define ScreenHeight [[UIScreen mainScreen] bounds].size.height
+
 @interface STVerbTableViewCell()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (nonatomic, strong) UIButton *moreButton;
@@ -51,12 +54,13 @@
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         layout.minimumLineSpacing = 10;
         layout.itemSize = CGSizeMake(90, 200);
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 40, self.contentView.frame.size.width, 200) collectionViewLayout:layout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 40,ScreenWidth , 200) collectionViewLayout:layout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         [_collectionView registerClass:[STVerbCollectionViewCell class] forCellWithReuseIdentifier:@"cell333"];
         _collectionView.backgroundColor = [UIColor clearColor];
         _collectionView.contentInset = UIEdgeInsetsMake(0, 10, 0, 10);
+        _collectionView.showsHorizontalScrollIndicator = NO;
         [self.contentView addSubview:_collectionView];
         
     }

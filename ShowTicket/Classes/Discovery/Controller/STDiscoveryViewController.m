@@ -21,6 +21,7 @@
 #import "STWebViewController.h"
 #import "STAllShowViewController.h"
 #import "STSearchShowViewController.h"
+#import "SelectCityButton.h"
 
 
 
@@ -29,12 +30,14 @@
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
 
 
-@interface STDiscoveryViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface STDiscoveryViewController ()<UITableViewDelegate,UITableViewDataSource,JFCityViewControllerDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *headerImages;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, assign) NSInteger offset;
+
+@property (nonatomic, strong) SelectCityButton *cityButton;
 
 @end
 
@@ -115,17 +118,18 @@
 
 - (void)setupNavbar {
     SelectCityButton *cityBtn = [SelectCityButton buttonWithType:UIButtonTypeCustom];
-    if (self.cityName ) {
-        [cityBtn setTitle:self.cityName forState:UIControlStateNormal];
-    }else {
-        [cityBtn setTitle:@"北京" forState:UIControlStateNormal];
+    NSString *cityName = [[NSUserDefaults standardUserDefaults]stringForKey:@"selectCityName"];
+    if (![self.cityName isEqualToString:cityName]) {
+        self.cityName = cityName;
+        [self loadNewData];
     }
+    [cityBtn setTitle:cityName forState:UIControlStateNormal];
     [cityBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cityBtn setImage:[UIImage imageNamed:@"btn_cityArrow"] forState:UIControlStateNormal];
     [cityBtn addTarget:self action:@selector(selectedCity) forControlEvents:UIControlEventTouchUpInside];
     cityBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    //    self.cityBtn = cityBtn;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cityBtn];
+        self.cityButton = cityBtn;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.cityButton];
     
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [searchBtn setTitle:@"搜索明星、演唱会、场馆" forState:UIControlStateNormal];
@@ -154,7 +158,8 @@
 - (void)selectedCity {
     dispatch_async(dispatch_get_main_queue(), ^(void){
         JFCityViewController *city = [[JFCityViewController alloc] init];
-        city.locationCityName = @"北京";
+        city.locationCityName = [[NSUserDefaults standardUserDefaults] stringForKey:@"locationCityName"];
+        city.delegate = self;
         UINavigationController  *navi = [[UINavigationController alloc]initWithRootViewController:city];
         [self presentViewController:navi animated:YES completion:^{
         }];
@@ -202,6 +207,14 @@
     webVC.url = model.bannerUrl;
     webVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:webVC animated:YES];
+}
+
+- (void)cityName:(NSString *)name {
+    self.cityName = name;
+    [self.cityButton setTitle:name forState:UIControlStateNormal];
+    [self loadNewData];
+    [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"selectCityName"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
 }
 /*
 #pragma mark - Navigation

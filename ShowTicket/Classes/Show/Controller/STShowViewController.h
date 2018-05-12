@@ -11,5 +11,6 @@
 @interface STShowViewController : UIViewController
 
 @property (nonatomic, assign) NSInteger index;
+@property (nonatomic, copy) NSString *cityName;
 
 @end

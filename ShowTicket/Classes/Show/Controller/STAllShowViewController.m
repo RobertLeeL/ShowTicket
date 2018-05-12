@@ -19,7 +19,7 @@
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
 
-@interface STAllShowViewController ()
+@interface STAllShowViewController ()<JFCityViewControllerDelegate>
 
 @property (nonatomic, strong) SelectCityButton *cityButton;
 
@@ -40,17 +40,18 @@
 
 - (void)setupNavbar {
     SelectCityButton *cityBtn = [SelectCityButton buttonWithType:UIButtonTypeCustom];
-    if (self.cityName ) {
-        [cityBtn setTitle:self.cityName forState:UIControlStateNormal];
-    }else {
-        [cityBtn setTitle:@"北京" forState:UIControlStateNormal];
+    NSString *cityName = [[NSUserDefaults standardUserDefaults]stringForKey:@"selectCityName"];
+    if (![self.cityName isEqualToString:cityName]) {
+        self.cityName = cityName;
+        [self reloadData];
     }
+    [cityBtn setTitle:cityName forState:UIControlStateNormal];
     [cityBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cityBtn setImage:[UIImage imageNamed:@"btn_cityArrow"] forState:UIControlStateNormal];
     [cityBtn addTarget:self action:@selector(selectedCity) forControlEvents:UIControlEventTouchUpInside];
     cityBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    //    self.cityBtn = cityBtn;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cityBtn];
+    self.cityButton = cityBtn;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.cityButton];
     
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [searchBtn setTitle:@"搜索明星、演唱会、场馆" forState:UIControlStateNormal];
@@ -74,7 +75,8 @@
 - (void)selectedCity {
     dispatch_async(dispatch_get_main_queue(), ^(void){
         JFCityViewController *city = [[JFCityViewController alloc] init];
-        city.locationCityName = @"北京";
+        city.locationCityName = [[NSUserDefaults standardUserDefaults] stringForKey:@"locationCityName"];
+        city.delegate = self;
         UINavigationController  *navi = [[UINavigationController alloc]initWithRootViewController:city];
         [self presentViewController:navi animated:YES completion:^{
         }];
@@ -136,12 +138,21 @@
 - (__kindof UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index {
     STShowViewController *vc = [[STShowViewController alloc] init];
     vc.index = index;
+    vc.cityName = self.cityName;
     return vc;
 }
 
 - (CGFloat)menuView:(WMMenuView *)menu widthForItemAtIndex:(NSInteger)index {
     CGFloat width = [super menuView:menu widthForItemAtIndex:index];
     return width + 10;
+}
+
+- (void)cityName:(NSString *)name {
+    self.cityName = name;
+    [self.cityButton setTitle:name forState:UIControlStateNormal];
+    [self reloadData];
+    [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"selectCityName"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
 /*
@@ -153,5 +164,8 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (void)dealloc {
+    NSLog(@"STAllShowViewController dealloc");
+}
 
 @end

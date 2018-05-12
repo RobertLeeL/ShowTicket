@@ -54,9 +54,12 @@
     if ([CLLocationManager locationServicesEnabled]  //确定用户的位置服务启用
         &&[CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied){
         //位置服务是在设置中禁用
+        
         _userLocationBlock = [userLocation copy];
         _userLocationBlock(39.9110130000,116.4135540000,@"北京");
-
+        if (self.delegate && [self.delegate respondsToSelector:@selector(getLocationAuthorityDenied)]) {
+            [self.delegate getLocationAuthorityDenied];
+        }
         return;
     }
     _userLocationBlock = [userLocation copy];
@@ -77,14 +80,7 @@
         if (!error) {
             NSString *cityName = placemarks.lastObject.addressDictionary[@"City"];
             NSString *str = [cityName substringToIndex:cityName.length -1];
-            _userLocationBlock(location.coordinate.latitude,location.coordinate.longitude,str);
-//            [self setValue:location.coordinate.latitude forKey:@"lat"];
-            
-//            self.lat = location.coordinate.latitude;
-//            self.lon = location.coordinate.longitude;
-            _cityName = str;
-//            self.cityName = str;
-        }
+            _userLocationBlock(location.coordinate.latitude,location.coordinate.longitude,str);        }
     }];
     [_manager stopUpdatingLocation];
 }

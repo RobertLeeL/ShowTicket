@@ -24,13 +24,14 @@
 #import <MJRefresh.h>
 #import "STShowDetailViewController.h"
 #import "STSearchShowViewController.h"
+#import "STUserLocation.h"
 
 #define ScreenBounds [[UIScreen mainScreen] bounds]
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
 
 
-@interface STVerbViewController ()<UITableViewDelegate,UITableViewDataSource,STVerbTableViewCellDelegate,STImageScrollViewDelegate,STVerbTableViewCellDelegate,STShowDetailVerbTableViewCellDelegate>
+@interface STVerbViewController ()<UITableViewDelegate,UITableViewDataSource,STVerbTableViewCellDelegate,STImageScrollViewDelegate,STVerbTableViewCellDelegate,STShowDetailVerbTableViewCellDelegate,STUserLocationDelegate,JFCityViewControllerDelegate>
 
 @property (nonatomic, strong) STImageScorollView *imageScorollView;
 @property (nonatomic, copy) NSString *cityName;
@@ -58,6 +59,7 @@
     self.navigationController.navigationBar.frame = CGRectMake(0, [[UIApplication sharedApplication] statusBarFrame].size.height, self.view.frame.size.width, 44);
     self.tabBarController.tabBar.hidden = NO;
     [self cofigNavagationBar];
+    
 }
 
 - (NSMutableArray *)headerImages {
@@ -119,6 +121,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self getData];
+    [self getUserLocation];
     _imageScorollView = [[STImageScorollView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 250)];
 //    [self.view addSubview:_imageScorollView];
     _showTableView = [[UITableView alloc] init];
@@ -148,17 +151,18 @@
 
 - (void)cofigNavagationBar {
     SelectCityButton *cityBtn = [SelectCityButton buttonWithType:UIButtonTypeCustom];
-    if (self.cityName ) {
-        [cityBtn setTitle:self.cityName forState:UIControlStateNormal];
-    }else {
-        [cityBtn setTitle:@"北京" forState:UIControlStateNormal];
+    NSString *cityName = [[NSUserDefaults standardUserDefaults]stringForKey:@"selectCityName"];
+    if (![self.cityName isEqualToString:cityName]) {
+        self.cityName = cityName;
+        [self loadNewData];
     }
+    [cityBtn setTitle:cityName forState:UIControlStateNormal];
     [cityBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cityBtn setImage:[UIImage imageNamed:@"btn_cityArrow"] forState:UIControlStateNormal];
     [cityBtn addTarget:self action:@selector(selectedCity) forControlEvents:UIControlEventTouchUpInside];
     cityBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-//    self.cityBtn = cityBtn;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cityBtn];
+    self.cityBtn = cityBtn;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.cityBtn];
     
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [searchBtn setTitle:@"搜索明星、演唱会、场馆" forState:UIControlStateNormal];
@@ -292,23 +296,24 @@
         });
     });
     
-    
-    [HttpTool getUrlWithString:@"https://www.tking.cn/userdataapi/mobile/keywords?isSupportSession=1&src=ios&ver=4.1.0" parameters:nil success:^(id responseObject) {
-        if (responseObject) {
-            NSDictionary *dict = responseObject[@"result"];
-            NSArray *data = dict[@"data"];
-            NSMutableArray *dataArray = [[NSMutableArray alloc] init];
-            for (NSDictionary *dataDict in data) {
-                NSString *keyWord = dataDict[@"keyword"];
-                [dataArray addObject:keyWord];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [HttpTool getUrlWithString:@"https://www.tking.cn/userdataapi/mobile/keywords?isSupportSession=1&src=ios&ver=4.1.0" parameters:nil success:^(id responseObject) {
+            if (responseObject) {
+                NSDictionary *dict = responseObject[@"result"];
+                NSArray *data = dict[@"data"];
+                NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+                for (NSDictionary *dataDict in data) {
+                    NSString *keyWord = dataDict[@"keyword"];
+                    [dataArray addObject:keyWord];
+                }
+                [[NSUserDefaults standardUserDefaults] setValue:dataArray.copy forKey:@"hotCityName"];
+                [[NSUserDefaults standardUserDefaults]synchronize];
             }
-            [[NSUserDefaults standardUserDefaults] setValue:dataArray.copy forKey:@"hotCityName"];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-        }
-    } failure:^(NSError *error) {
-        
-    }];
-
+        } failure:^(NSError *error) {
+            
+        }];
+    });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -319,7 +324,8 @@
 - (void)selectedCity {
     dispatch_async(dispatch_get_main_queue(), ^(void){
         JFCityViewController *city = [[JFCityViewController alloc] init];
-        city.locationCityName = @"北京";
+        city.locationCityName = [[NSUserDefaults standardUserDefaults] stringForKey:@"locationCityName"];
+        city.delegate = self;
         UINavigationController  *navi = [[UINavigationController alloc]initWithRootViewController:city];
         [self presentViewController:navi animated:YES completion:^{
         }];
@@ -458,6 +464,70 @@
 //选择banner时
 - (void)didsSelectedImageIndex:(NSInteger)index {
     NSLog(@"%d",index);
+}
+
+- (void)cityName:(NSString *)name {
+    self.cityName = name;
+    [self.cityBtn setTitle:name forState:UIControlStateNormal];
+    [self loadNewData];
+    [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"selectCityName"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+- (void)getUserLocation {
+    STUserLocation *userlocation = [STUserLocation shareInstance];
+    userlocation.delegate = self;
+    [userlocation getUserLocation:^(double lat, double lon, NSString *cityName) {
+                NSLog(@"%@",cityName);
+        NSString *selectCityName = [[NSUserDefaults standardUserDefaults]stringForKey:@"selectCityName"];
+        if (![cityName isEqualToString:selectCityName]) {
+            [self showAlertView:cityName];
+        }
+        [[NSUserDefaults standardUserDefaults] setObject:cityName forKey:@"locationCityName"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }];
+}
+
+- (void)showAlertView:(NSString *)cityName {
+    UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"提醒" message:[NSString stringWithFormat:@"当前定位城市为%@,是否切换",cityName] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *confirmButton = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.cityName = cityName;
+        [self.cityBtn setTitle:cityName forState:UIControlStateNormal];
+        [self loadNewData];
+        [[NSUserDefaults standardUserDefaults] setObject:cityName forKey:@"selectCityName"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }];
+    UIAlertAction *canlecdButton = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [alertView addAction:canlecdButton];
+    [alertView addAction:confirmButton];
+    
+    [self presentViewController:alertView animated:YES completion:nil];
+}
+
+- (void)getLocationAuthorityDenied {
+    [self alertViewWithMessage];
+}
+
+- (void)alertViewWithMessage {
+    UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"定位服务未开启" message:@"请在系统设置中开启服务" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *confirmButton = [UIAlertAction actionWithTitle:@"去设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //进入系统设置页面，APP本身的权限管理页面
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    }];
+    UIAlertAction *canlecdButton = [UIAlertAction actionWithTitle:@"暂不" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [alertView addAction:canlecdButton];
+    [alertView addAction:confirmButton];
+    
+    [self presentViewController:alertView animated:YES completion:nil];
+    
+}
+
+- (void)dealloc {
+    NSLog(@"StVerbViewController dealloc");
 }
 
 @end

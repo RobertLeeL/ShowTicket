@@ -18,7 +18,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self getUserLocation];
+    
+    if (![[NSUserDefaults standardUserDefaults] stringForKey:@"selectCityName"].length) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"北京" forKey:@"selectCityName"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
     [self setupRootTabBarController];
    
     // Override point for customization after application launch.
@@ -33,11 +37,6 @@
     [self.window makeKeyAndVisible];
 }
 
-- (void)getUserLocation {
-    [[STUserLocation shareInstance] getUserLocation:^(double lat, double lon, NSString *cityName) {
-//        NSLog(@"%@",cityName);
-    }];
-}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
