@@ -54,22 +54,14 @@
         }
         cell.textLabel.text = self.sourceData[indexPath.row];
         return cell;
-    } else if ([_type isEqualToString:@"1"]) {
-        static NSString *identifier1 = @"searchResultcell";
-        STShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
-        if (!cell) {
-            cell = [[STShowTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier1];
-            [cell initWithModel:self.sourceData[indexPath.row]];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            return cell;
     }
-    }
-    static NSString *identifier0 = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier0];
+    static NSString *identifier1 = @"searchResultcell";
+    STShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier0];
+        cell = [[STShowTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier1];
     }
-    cell.textLabel.text = @"哈哈";
+    [cell initWithModel:self.sourceData[indexPath.row]];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 

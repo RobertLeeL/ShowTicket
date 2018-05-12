@@ -20,12 +20,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ShowTicket/Classes/Verb/Controller/STVerbViewController.m"
-            timestampString = "547836963.26904"
+            timestampString = "547838645.549395"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "503"
             endingLineNumber = "503"
             landmarkName = "-didsSelectedImageIndex:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ShowTicket/Classes/Verb/Controller/STSearchShowViewController.m"
+            timestampString = "547838645.549904"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
+            landmarkName = "-loadResultData:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

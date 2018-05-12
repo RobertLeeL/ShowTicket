@@ -18,6 +18,7 @@
 #import "UIViewController+showHUD.h"
 #import <MJRefresh.h>
 #import "STShowDetailViewController.h"
+#import <YTKKeyValueStore.h>
 
 #define ScreenBounds [[UIScreen mainScreen] bounds]
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
@@ -114,7 +115,7 @@
     _monthLabel.text = [dateFormatter stringFromDate:date];
     
     
-    [self getData];
+    [self getData:_dateSelected];;
     // Do any additional setup after loading the view.
 }
 
@@ -124,16 +125,25 @@
 }
 
 - (void)loadNewData {
-    [self getData];
+    [self getData:_dateSelected];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [_showTableView.mj_header endRefreshing];
     });
 }
 
-- (void)getData {
+- (void)getData:(NSDate *)date {
     [self.dataArray removeAllObjects];
+    
+    NSString *selectName = [[NSUserDefaults standardUserDefaults]valueForKey:@"selectCityName"];
+    YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"citiesOID.db"];
+    NSString *tableName = @"cities_table";
+    [store createTableWithName:tableName];
+    
+    NSString *cityOID = [store getStringById:selectName fromTable:tableName];
+    
+    NSString *time = [self getCurrentTimeInterVal:date];
     NSMutableArray *data = [[NSMutableArray alloc] init];
-    [HttpTool getUrlWithString:@"https://www.tking.cn/showapi/mobile/pub/site/1009/calendarShow?fromDate=1526054400000&isSupportSession=1&length=10&offset=0&siteCityOID=1101&src=ios&ver=4.1.0" parameters:nil success:^(id responseObject) {
+    [HttpTool getUrlWithString:[NSString stringWithFormat:@"https://www.tking.cn/showapi/mobile/pub/site/1009/calendarShow?fromDate=%@&isSupportSession=1&length=10&offset=0&siteCityOID=%@&src=ios&ver=4.1.0",time,cityOID] parameters:nil success:^(id responseObject) {
         if (responseObject) {
             //            NSLog(@"%@",responseObject);
             NSDictionary *dict = responseObject[@"result"];
@@ -149,10 +159,10 @@
             if (!self.dataArray.count) {
                 [self showHUD:@"该日期无演出"];
             }
-            
+
         }
     } failure:^(NSError *error) {
-        
+
     }];
 }
 
@@ -288,6 +298,7 @@
         return;
     }
     
+    [self getData:_dateSelected];
     
     
     // Load the previous or next page if touch a day from another month
@@ -347,6 +358,13 @@
     STShowDetailViewController *vc = [[STShowDetailViewController alloc] init];
     vc.model = self.dataArray[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (NSString *)getCurrentTimeInterVal:(NSDate *)date {
+//    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[date timeIntervalSince1970] * 1000];
+    return timeSp;
 }
 
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView {

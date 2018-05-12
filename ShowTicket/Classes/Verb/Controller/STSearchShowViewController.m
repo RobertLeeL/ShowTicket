@@ -15,6 +15,8 @@
 #import "STShowModel.h"
 #import <YYModel.h>
 #import "STShowDetailViewController.h"
+#import <YTKKeyValueStore.h>
+#import "UIViewController+showHUD.h"
 
 typedef NS_ENUM(NSUInteger, ViewDisplayType) {
     ViewDisplayHistoryTableViewType,     //显示历史搜索
@@ -259,10 +261,14 @@ typedef NS_ENUM(NSUInteger, ViewDisplayType) {
     /*****模拟请求*******/
     [self.resultData removeAllObjects];
     
-//    NSString *selectCityName = [[NSUserDefaults standardUserDefaults] stringForKey:@"selectCityName"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
+    NSString *selectName = [[NSUserDefaults standardUserDefaults]valueForKey:@"selectCityName"];
+    YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"citiesOID.db"];
+    NSString *tableName = @"cities_table";
+    [store createTableWithName:tableName];
+    NSString *string = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *cityOID = [store getStringById:selectName fromTable:tableName];
     NSMutableArray *data = [[NSMutableArray alloc] init];
-    [HttpTool getUrlWithString:@"https://www.tking.cn/showapi/mobile/pub/active_show?isSupportSession=1&key_words=%E5%91%A8%E6%9D%B0%E4%BC%A6&length=10&locationCityOID=6101&offset=0&seq=desc&siteCityOID=1101&siteOID=1009&sorting=weight&src=ios&ver=4.1.0" parameters:nil success:^(id responseObject) {
+    [HttpTool getUrlWithString:[NSString stringWithFormat:@"https://www.tking.cn/showapi/mobile/pub/active_show?isSupportSession=1&key_words=%@&length=10&locationCityOID=%@&offset=0&seq=desc&siteCityOID=%@&siteOID=1009&sorting=weight&src=ios&ver=4.1.0",string,cityOID,cityOID] parameters:nil success:^(id responseObject) {
         if (responseObject) {
             //            NSLog(@"%@",responseObject);
             NSDictionary *dict = responseObject[@"result"];
@@ -276,9 +282,12 @@ typedef NS_ENUM(NSUInteger, ViewDisplayType) {
             [self.resultData addObjectsFromArray:data];
             self.resultView.userInteractionEnabled = YES;
             [self.resultView.sourceData removeAllObjects];
-            [self.resultView.sourceData addObjectsFromArray:self.resultData];
+            self.resultView.sourceData = self.resultData;
             [self.resultView reloadData];
             
+            if (!self.resultData.count) {
+                [self showHUD:@"无搜索结果"];
+            }
         }
     } failure:^(NSError *error) {
         
