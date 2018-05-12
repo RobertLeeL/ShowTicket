@@ -66,6 +66,10 @@
 		07A5AE24206942F500D90D99 /* STMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A5AE23206942F500D90D99 /* STMineViewController.m */; };
 		07A5AE272069430700D90D99 /* STDiscoveryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A5AE262069430700D90D99 /* STDiscoveryViewController.m */; };
 		07A5AE2A2069434000D90D99 /* STNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A5AE292069434000D90D99 /* STNavigationViewController.m */; };
+		07C425F220A6BBB200EDEF49 /* STSearchShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C425F120A6BBB200EDEF49 /* STSearchShowViewController.m */; };
+		07C425F520A6BBE900EDEF49 /* STSearchNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C425F420A6BBE900EDEF49 /* STSearchNavBarView.m */; };
+		07C425FB20A6BC8C00EDEF49 /* STSearchResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C425FA20A6BC8C00EDEF49 /* STSearchResultView.m */; };
+		07C425FE20A6BCC200EDEF49 /* STSearchHotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C425FD20A6BCC200EDEF49 /* STSearchHotView.m */; };
 		07FCE0C8208CB70400304C72 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FCE0C7208CB70400304C72 /* UIColor+Hex.m */; };
 		07FCE0CB208CB76700304C72 /* UIView+layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FCE0CA208CB76700304C72 /* UIView+layout.m */; };
 		07FCE0CE208CB90C00304C72 /* UIImage+color.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FCE0CD208CB90C00304C72 /* UIImage+color.m */; };
@@ -209,6 +213,15 @@
 		07A5AE262069430700D90D99 /* STDiscoveryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STDiscoveryViewController.m; sourceTree = "<group>"; };
 		07A5AE282069434000D90D99 /* STNavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STNavigationViewController.h; sourceTree = "<group>"; };
 		07A5AE292069434000D90D99 /* STNavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STNavigationViewController.m; sourceTree = "<group>"; };
+		07C425F020A6BBB200EDEF49 /* STSearchShowViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STSearchShowViewController.h; sourceTree = "<group>"; };
+		07C425F120A6BBB200EDEF49 /* STSearchShowViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STSearchShowViewController.m; sourceTree = "<group>"; };
+		07C425F320A6BBE900EDEF49 /* STSearchNavBarView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STSearchNavBarView.h; sourceTree = "<group>"; };
+		07C425F420A6BBE900EDEF49 /* STSearchNavBarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STSearchNavBarView.m; sourceTree = "<group>"; };
+		07C425F920A6BC8C00EDEF49 /* STSearchResultView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STSearchResultView.h; sourceTree = "<group>"; };
+		07C425FA20A6BC8C00EDEF49 /* STSearchResultView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STSearchResultView.m; sourceTree = "<group>"; };
+		07C425FC20A6BCC200EDEF49 /* STSearchHotView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STSearchHotView.h; sourceTree = "<group>"; };
+		07C425FD20A6BCC200EDEF49 /* STSearchHotView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STSearchHotView.m; sourceTree = "<group>"; };
+		07C425FF20A6BDAA00EDEF49 /* common_define.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common_define.h; sourceTree = "<group>"; };
 		07FCE0C6208CB70400304C72 /* UIColor+Hex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
 		07FCE0C7208CB70400304C72 /* UIColor+Hex.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		07FCE0C9208CB76700304C72 /* UIView+layout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+layout.h"; sourceTree = "<group>"; };
@@ -391,6 +404,7 @@
 			children = (
 				07A5ADCA205FEA3800D90D99 /* AppDelegate.h */,
 				07A5ADCB205FEA3800D90D99 /* AppDelegate.m */,
+				07C425FF20A6BDAA00EDEF49 /* common_define.h */,
 			);
 			path = APP;
 			sourceTree = "<group>";
@@ -504,6 +518,8 @@
 				07A5AE1D206942D900D90D99 /* STVerbViewController.m */,
 				07893AEC20A044440092753C /* STCalendarViewController.h */,
 				07893AED20A044440092753C /* STCalendarViewController.m */,
+				07C425F020A6BBB200EDEF49 /* STSearchShowViewController.h */,
+				07C425F120A6BBB200EDEF49 /* STSearchShowViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -538,6 +554,12 @@
 				07893B1320A2D0AC0092753C /* STVerbTableViewCell.m */,
 				07893B1520A2D0C30092753C /* STVerbCollectionViewCell.h */,
 				07893B1620A2D0C30092753C /* STVerbCollectionViewCell.m */,
+				07C425F320A6BBE900EDEF49 /* STSearchNavBarView.h */,
+				07C425F420A6BBE900EDEF49 /* STSearchNavBarView.m */,
+				07C425F920A6BC8C00EDEF49 /* STSearchResultView.h */,
+				07C425FA20A6BC8C00EDEF49 /* STSearchResultView.m */,
+				07C425FC20A6BCC200EDEF49 /* STSearchHotView.h */,
+				07C425FD20A6BCC200EDEF49 /* STSearchHotView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -863,6 +885,7 @@
 				07893AE120A015050092753C /* JFCityCollectionViewCell.m in Sources */,
 				07893A5A208CBC480092753C /* SelectCityButton.m in Sources */,
 				07FCE0CB208CB76700304C72 /* UIView+layout.m in Sources */,
+				07C425F220A6BBB200EDEF49 /* STSearchShowViewController.m in Sources */,
 				07893A60208CCD1D0092753C /* STImageScorollView.m in Sources */,
 				07893B6220A4BC150092753C /* STDetailHeadView.m in Sources */,
 				07A5AE24206942F500D90D99 /* STMineViewController.m in Sources */,
@@ -877,8 +900,10 @@
 				07893B3620A358260092753C /* RefreshHeadView.m in Sources */,
 				07893B7F20A5D69F0092753C /* UIAlertController+BAKit.m in Sources */,
 				07893B6B20A5AB530092753C /* STShowDetailModel.m in Sources */,
+				07C425F520A6BBE900EDEF49 /* STSearchNavBarView.m in Sources */,
 				07893B1D20A31A3C0092753C /* HttpSessionManager.m in Sources */,
 				07893B0820A1D6680092753C /* STTitleButton.m in Sources */,
+				07C425FB20A6BC8C00EDEF49 /* STSearchResultView.m in Sources */,
 				07893B2120A33EDA0092753C /* STBannerInformation.m in Sources */,
 				07A5AE072061323C00D90D99 /* STUserLocation.m in Sources */,
 				07893B4B20A47E2B0092753C /* STShowModel.m in Sources */,
@@ -908,6 +933,7 @@
 				07FCE0C8208CB70400304C72 /* UIColor+Hex.m in Sources */,
 				07893B0E20A2BF860092753C /* STShowType.m in Sources */,
 				07A5ADCC205FEA3800D90D99 /* AppDelegate.m in Sources */,
+				07C425FE20A6BCC200EDEF49 /* STSearchHotView.m in Sources */,
 				07893B3920A3E6EB0092753C /* STWebViewController.m in Sources */,
 				07893B3320A3565C0092753C /* RefreshHeaderView.m in Sources */,
 				07893AE420A015050092753C /* JFCityHeaderView.m in Sources */,

@@ -10,6 +10,10 @@
 #import <WebKit/WebKit.h>
 #import <BAKit_WebView.h>
 #import "BAAlertController.h"
+#import "UIImage+color.h"
+
+#define ScreenWidth [[UIScreen mainScreen] bounds].size.width
+#define ScreenHeight [[UIScreen mainScreen] bounds].size.height
 
 @interface STShowIntroductionViewController ()
 @property(nonatomic, strong) WKWebView *webView;
@@ -24,6 +28,13 @@
 @implementation STShowIntroductionViewController
 
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:0 alpha:1]}];
+    UIImage *image = [UIImage imageWithColor:[UIColor colorWithWhite:1 alpha:1] size:CGSizeMake(ScreenWidth, 0)];
+    [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

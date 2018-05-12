@@ -23,6 +23,7 @@
 #import "STShowDetailVerbTableViewCell.h"
 #import <MJRefresh.h>
 #import "STShowDetailViewController.h"
+#import "STSearchShowViewController.h"
 
 #define ScreenBounds [[UIScreen mainScreen] bounds]
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
@@ -290,6 +291,23 @@
             [_showTableView reloadData];
         });
     });
+    
+    
+    [HttpTool getUrlWithString:@"https://www.tking.cn/userdataapi/mobile/keywords?isSupportSession=1&src=ios&ver=4.1.0" parameters:nil success:^(id responseObject) {
+        if (responseObject) {
+            NSDictionary *dict = responseObject[@"result"];
+            NSArray *data = dict[@"data"];
+            NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+            for (NSDictionary *dataDict in data) {
+                NSString *keyWord = dataDict[@"keyword"];
+                [dataArray addObject:keyWord];
+            }
+            [[NSUserDefaults standardUserDefaults] setValue:dataArray.copy forKey:@"hotCityName"];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
 
 }
 
@@ -318,7 +336,10 @@
 }
 
 - (void)seachShow {
-    
+    STSearchShowViewController *vc = [[STSearchShowViewController alloc] init];
+    UINavigationController  *navi = [[UINavigationController alloc]initWithRootViewController:vc];
+    [self presentViewController:navi animated:YES completion:^{
+    }];
 }
 
 #pragma mark-TableViewDelegate

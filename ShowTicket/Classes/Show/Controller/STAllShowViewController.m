@@ -12,6 +12,8 @@
 #import "UIImage+color.h"
 #import "UIColor+Hex.h"
 #import "UIView+layout.h"
+#import "STSearchShowViewController.h"
+#import "JFCityViewController.h"
 
 #define ScreenBounds [[UIScreen mainScreen] bounds]
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
@@ -69,6 +71,23 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"#F4153D"] size:CGSizeMake(ScreenWidth, 64)] forBarMetrics:UIBarMetricsDefault];
 }
 
+- (void)selectedCity {
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        JFCityViewController *city = [[JFCityViewController alloc] init];
+        city.locationCityName = @"北京";
+        UINavigationController  *navi = [[UINavigationController alloc]initWithRootViewController:city];
+        [self presentViewController:navi animated:YES completion:^{
+        }];
+    });
+}
+
+
+- (void)seachShow {
+    STSearchShowViewController *vc = [[STSearchShowViewController alloc] init];
+    UINavigationController  *navi = [[UINavigationController alloc]initWithRootViewController:vc];
+    [self presentViewController:navi animated:YES completion:^{
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

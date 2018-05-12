@@ -20,6 +20,7 @@
 #import <YYModel.h>
 #import "STWebViewController.h"
 #import "STAllShowViewController.h"
+#import "STSearchShowViewController.h"
 
 
 
@@ -159,14 +160,11 @@
         }];
     });
 }
-
 - (void)seachShow {
-    for (UIViewController *con in self.tabBarController.viewControllers) {
-        if ([con isKindOfClass:[STAllShowViewController class]]) {
-            self.tabBarController.selectedViewController = con;
-        }
-    }
-//    self.tabBarController.selectedIndex = 1;
+    STSearchShowViewController *vc = [[STSearchShowViewController alloc] init];
+    UINavigationController  *navi = [[UINavigationController alloc]initWithRootViewController:vc];
+    [self presentViewController:navi animated:YES completion:^{
+    }];
 }
 
 - (void)loadNewData {
