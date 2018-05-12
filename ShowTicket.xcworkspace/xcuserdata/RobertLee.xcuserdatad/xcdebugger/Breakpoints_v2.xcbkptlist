@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ShowTicket/Classes/Show/Controller/STShowViewController.m"
-            timestampString = "547813978.123647"
+            filePath = "ShowTicket/Classes/Verb/Controller/STVerbViewController.m"
+            timestampString = "547836963.26904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "-getData"
+            startingLineNumber = "503"
+            endingLineNumber = "503"
+            landmarkName = "-didsSelectedImageIndex:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

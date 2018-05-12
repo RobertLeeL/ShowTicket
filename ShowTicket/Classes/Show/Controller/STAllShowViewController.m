@@ -30,6 +30,21 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     [self setupNavbar];
+//    [self chooseIndex];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didTouchMoreButton:) name:@"didMoreButton" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSlectTitle:) name:@"didSlectTitle" object:nil];
+}
+
+- (void)didTouchMoreButton:(NSNotification *)userinfo {
+    NSDictionary *dict = [userinfo userInfo];
+    NSIndexPath *indexPath = dict[@"index"];
+    self.selectIndex = indexPath.row;
+}
+
+- (void)didSlectTitle:(NSNotification *)userinfo {
+    NSDictionary *dict = [userinfo userInfo];
+    NSString *index = dict[@"selectTitle"];
+    self.selectIndex = [index intValue];
 }
 
 - (void)viewDidLoad {
@@ -91,6 +106,10 @@
     }];
 }
 
+//- (void)chooseIndex {
+//    self.selectIndex =(int)[[NSUserDefaults standardUserDefaults] objectForKey:@"showTableIndex"];
+//}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -150,9 +169,9 @@
 - (void)cityName:(NSString *)name {
     self.cityName = name;
     [self.cityButton setTitle:name forState:UIControlStateNormal];
-    [self reloadData];
     [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"selectCityName"];
     [[NSUserDefaults standardUserDefaults]synchronize];
+    [self reloadData];
 }
 
 /*

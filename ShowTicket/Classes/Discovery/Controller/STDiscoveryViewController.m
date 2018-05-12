@@ -22,6 +22,7 @@
 #import "STAllShowViewController.h"
 #import "STSearchShowViewController.h"
 #import "SelectCityButton.h"
+#import <YTKKeyValueStore.h>
 
 
 
@@ -68,7 +69,7 @@
     
     [self getData];
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    _offset = 0;
     _tableView = [[UITableView alloc] init];
     _tableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
     _tableView.delegate = self;
@@ -91,13 +92,23 @@
     header.stateLabel.hidden = YES;
     _tableView.mj_header = header;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(getMoreData)];
     [self.view addSubview:_tableView];
     // Do any additional setup after loading the view.
 }
 
 - (void)getData {
+    
+    NSString *selectName = [[NSUserDefaults standardUserDefaults]valueForKey:@"selectCityName"];
+    YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"citiesOID.db"];
+    NSString *tableName = @"cities_table";
+    [store createTableWithName:tableName];
+    
+    NSString *cityOID = [store getStringById:selectName fromTable:tableName];
+    
+    NSString *time = [self getCurrentTimeInterVal];
     NSMutableArray *data = [[NSMutableArray alloc] init];
-    [HttpTool getUrlWithString:@"https://www.tking.cn/showapi/mobile/pub/site/1002/discovery?isSupportSession=1&length=10&offset=0&siteCityOID=1101&src=ios&timeinterval=1521381243&ver=4.1.0" parameters:nil success:^(id responseObject) {
+    [HttpTool getUrlWithString:[NSString stringWithFormat:@"https://www.tking.cn/showapi/mobile/pub/site/1002/discovery?isSupportSession=1&length=10&offset=%d&siteCityOID=%@&src=ios&timeinterval=%@&ver=4.1.0",_offset,cityOID,time] parameters:nil success:^(id responseObject) {
         if (responseObject) {
             //            NSLog(@"%@",responseObject);
             NSDictionary *dict = responseObject[@"result"];
@@ -173,11 +184,20 @@
 }
 
 - (void)loadNewData {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    _offset = 0;
+    [self getData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [_tableView.mj_header endRefreshing];
     });
 }
 
+- (void)getMoreData {
+    _offset += 10;
+    [self getData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [_tableView.mj_footer endRefreshing];
+    });
+}
 
 #pragma mark-TableViewDelegate
 
@@ -212,9 +232,16 @@
 - (void)cityName:(NSString *)name {
     self.cityName = name;
     [self.cityButton setTitle:name forState:UIControlStateNormal];
-    [self loadNewData];
     [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"selectCityName"];
     [[NSUserDefaults standardUserDefaults]synchronize];
+    [self loadNewData];
+}
+
+- (NSString *)getCurrentTimeInterVal {
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    return timeSp;
 }
 /*
 #pragma mark - Navigation

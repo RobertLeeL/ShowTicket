@@ -25,6 +25,11 @@
 #import "STShowDetailViewController.h"
 #import "STSearchShowViewController.h"
 #import "STUserLocation.h"
+#import "STDataBase.h"
+#import <YTKKeyValueStore.h>
+#import "STAllShowViewController.h"
+#import "STWebViewController.h"
+#import "STShowDetailModel.h"
 
 #define ScreenBounds [[UIScreen mainScreen] bounds]
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
@@ -119,10 +124,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    [STDataBase shareInstance];
     [self getData];
     [self getUserLocation];
     _imageScorollView = [[STImageScorollView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 250)];
+    _imageScorollView.delegate = self;
 //    [self.view addSubview:_imageScorollView];
     _showTableView = [[UITableView alloc] init];
     _showTableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight - 44);
@@ -191,6 +197,15 @@
 
 - (void)getData {
     
+    NSString *selectName = [[NSUserDefaults standardUserDefaults]valueForKey:@"selectCityName"];
+    YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"citiesOID.db"];
+    NSString *tableName = @"cities_table";
+    [store createTableWithName:tableName];
+    
+    NSString *cityOID = [store getStringById:selectName fromTable:tableName];
+    
+    NSString *time = [self getCurrentTimeInterVal];
+    
     // 创建队列组，可以使多个网络请求异步执行，执行完之后再进行操作
     dispatch_group_t group = dispatch_group_create();
     //创建全局队列
@@ -199,7 +214,7 @@
     dispatch_group_async(group, queue, ^{
         dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
         NSMutableArray *bannerData = [[NSMutableArray alloc] init];
-        [HttpTool getUrlWithString:@"https://www.tking.cn/showapi/mobile/pub/site/1002/banner/app?isSupportSession=1&siteCityOID=1101&src=ios&timeinterval=1524407554&ver=4.1.0" parameters:nil success:^(id responseObject) {
+        [HttpTool getUrlWithString:[NSString stringWithFormat:@"https://www.tking.cn/showapi/mobile/pub/site/1002/banner/app?isSupportSession=1&siteCityOID=%@&src=ios&timeinterval=%@&ver=4.1.0",cityOID,time] parameters:nil success:^(id responseObject) {
             if (responseObject) {
                 //            NSLog(@"%@",responseObject);
                 NSDictionary *dict = responseObject[@"result"];
@@ -219,7 +234,7 @@
                         [posterURLArray addObject:string];
                     }
                     _imageScorollView.dataArray = self.bannerDataArray;
-                    _imageScorollView.imagesURLStrings = posterURLArray.copy;
+                    _imageScorollView.scrollView.imageURLStringsGroup = posterURLArray.copy;
                 });
             }
         } failure:^(NSError *error) {
@@ -229,7 +244,7 @@
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         
         NSMutableArray *hotShowDataArray = [[NSMutableArray alloc] init];
-        [HttpTool getUrlWithString:@"https://www.tking.cn/showapi/mobile/pub/site/1009/hot_show?isSupportSession=1&length=30&offset=0&siteCityOID=3301&src=ios&ver=4.1.0" parameters:nil success:^(id responseObject) {
+        [HttpTool getUrlWithString:[NSString stringWithFormat:@"https://www.tking.cn/showapi/mobile/pub/site/1009/hot_show?isSupportSession=1&length=30&offset=0&siteCityOID=%@&src=ios&ver=4.1.0",cityOID] parameters:nil success:^(id responseObject) {
             if (responseObject) {
                 //            NSLog(@"%@",responseObject);
                 NSDictionary *dict = responseObject[@"result"];
@@ -250,7 +265,7 @@
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         
         NSMutableArray *musicDataArray = [[NSMutableArray alloc] init];
-        [HttpTool getUrlWithString:@"https://www.tking.cn/showapi/mobile/pub/site/1009/topMarketingShows?isSupportSession=1&siteCityOID=1101&src=ios&timeinterval=1526057216&ver=4.1.0" parameters:nil success:^(id responseObject) {
+        [HttpTool getUrlWithString:[NSString stringWithFormat:@"https://www.tking.cn/showapi/mobile/pub/site/1009/topMarketingShows?isSupportSession=1&siteCityOID=%@&src=ios&timeinterval=%@&ver=4.1.0",cityOID,time] parameters:nil success:^(id responseObject) {
             if (responseObject) {
                 //            NSLog(@"%@",responseObject);
                 NSDictionary *dict = responseObject[@"result"];
@@ -452,26 +467,62 @@
 
 //点击查看更多按钮
 - (void)didSelectMoreButtonAtIndexPath:(NSIndexPath *)indexPath {
-    
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:indexPath forKey:@"index"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didMoreButton" object:nil userInfo:userInfo];
+    self.tabBarController.selectedIndex = 1;
 }
 
 
 //选择上面的8个按钮
 - (void)didSelectedTitleButtonIndex:(NSInteger)index {
-    
+    NSLog(@"%ld",(long)index);
+    NSInteger typeNumber  = index - 99;
+    NSLog(@"%ld",(long)typeNumber);
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%ld",(long)typeNumber] forKey:@"selectTitle"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSlectTitle" object:nil userInfo:userInfo];
+    self.tabBarController.selectedIndex = 1;
 }
 
 //选择banner时
 - (void)didsSelectedImageIndex:(NSInteger)index {
-    NSLog(@"%d",index);
+    STBannerInformation *model = self.bannerDataArray[index];
+    NSString *bannerUrl = model.bannerUrl;
+    if ([bannerUrl hasPrefix:@"http"]) {
+        STWebViewController *webVC = [[STWebViewController alloc] init];
+        webVC.url = model.bannerUrl;
+        webVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:webVC animated:YES];
+    } else {
+        NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+        [HttpTool getUrlWithString:[NSString stringWithFormat:@"https://www.tking.cn/showapi/mobile/pub/show//%@?client=piaodashi_weixin&isSupportSession=1&src=ios&ver=4.1.0",model.bannerUrl] parameters:nil success:^(id responseObject) {
+            if (responseObject) {
+                //            NSLog(@"%@",responseObject);
+                NSDictionary *dict = responseObject[@"result"];
+                NSDictionary *array = dict[@"data"];
+                STShowDetailModel *cell = [STShowDetailModel yy_modelWithDictionary:array];
+                STShowModel *showModel = [[STShowModel alloc] init];
+                showModel.showOID = cell.showOID;
+                showModel.showDate = cell.showDate;
+                showModel.showName = cell.showName;
+                showModel.minPrice = cell.minPrice;
+                showModel.posterURL = cell.posterURL;
+                STShowDetailViewController *vc = [[STShowDetailViewController alloc] init];
+                vc.model = showModel;
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
 }
 
 - (void)cityName:(NSString *)name {
     self.cityName = name;
     [self.cityBtn setTitle:name forState:UIControlStateNormal];
-    [self loadNewData];
     [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"selectCityName"];
     [[NSUserDefaults standardUserDefaults]synchronize];
+    [self loadNewData];
 }
 
 - (void)getUserLocation {
@@ -493,9 +544,9 @@
     UIAlertAction *confirmButton = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.cityName = cityName;
         [self.cityBtn setTitle:cityName forState:UIControlStateNormal];
-        [self loadNewData];
         [[NSUserDefaults standardUserDefaults] setObject:cityName forKey:@"selectCityName"];
         [[NSUserDefaults standardUserDefaults]synchronize];
+        [self loadNewData];
     }];
     UIAlertAction *canlecdButton = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
@@ -526,8 +577,16 @@
     
 }
 
+- (NSString *)getCurrentTimeInterVal {
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    return timeSp;
+}
+
 - (void)dealloc {
     NSLog(@"StVerbViewController dealloc");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

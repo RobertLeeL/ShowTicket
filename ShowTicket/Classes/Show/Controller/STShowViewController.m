@@ -17,6 +17,8 @@
 #import "STShowModel.h"
 #import "STShowTableViewCell.h"
 #import "STShowDetailViewController.h"
+#import <YTKKeyValueStore.h>
+#import "STDataBase.h"
 
 #define ScreenBounds [[UIScreen mainScreen] bounds]
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
@@ -47,6 +49,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [STDataBase shareInstance];
     self.view.backgroundColor = [UIColor whiteColor];
     _offset = 0;
     [self getData];
@@ -70,34 +73,110 @@
     header.stateLabel.hidden = YES;
     _tableView.mj_header = header;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(getMoreData)];
     [self.view addSubview:_tableView];
     
     // Do any additional setup after loading the view.
 }
 
-- (void)getData {
-    NSMutableArray *data = [[NSMutableArray alloc] init];
-    [HttpTool getUrlWithString:@"https://www.tking.cn/showapi/mobile/pub/site/1002/active_show?isSupportSession=1&length=10&locationCityOID=1101&offset=0&seq=desc&siteCityOID=1101&sorting=weight&src=ios&type=6&ver=4.1.0" parameters:nil success:^(id responseObject) {
-        if (responseObject) {
-//            NSLog(@"%@",responseObject);
-            NSDictionary *dict = responseObject[@"result"];
-            NSArray *array = dict[@"data"];
-            for (NSDictionary *dataDict in array) {
-                STShowModel *cell = [STShowModel yy_modelWithDictionary:dataDict];
-                if (cell) {
-                    [data addObject:cell];
-                }
-            }
-            [self.dataArray addObjectsFromArray:data];
-            [_tableView reloadData];
+- (void)getMoreData {
+    _offset += 10;
+    [self getData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [_tableView.mj_footer endRefreshing];
+    });
+}
 
-        }
-    } failure:^(NSError *error) {
-        
-    }];
+- (void)getData {
+    
+    NSString *selectName = [[NSUserDefaults standardUserDefaults]valueForKey:@"selectCityName"];
+    YTKKeyValueStore *store = [[YTKKeyValueStore alloc] initDBWithName:@"citiesOID.db"];
+    NSString *tableName = @"cities_table";
+    [store createTableWithName:tableName];
+    
+    NSString *cityOID = [store getStringById:selectName fromTable:tableName];
+    
+    NSString *time = [self getCurrentTimeInterVal];
+    
+    NSInteger typeNumber = 0;
+    switch (self.index) {
+        case 1:
+            typeNumber = 1;
+            break;
+        case 8:
+            typeNumber = 4;
+            break;
+        case 2:
+            typeNumber = 3;
+            break;
+        case 3:
+            typeNumber = 2;
+            break;
+        case 4:
+            typeNumber = 6;
+            break;
+        case 5:
+            typeNumber = 5;
+            break;
+        case 6:
+            typeNumber = 9;
+            break;
+        case 7:
+            typeNumber = 7;
+            break;
+        default:
+            typeNumber = 0;
+            break;
+    }
+    
+    NSMutableArray *data = [[NSMutableArray alloc] init];
+    if(typeNumber == 0) {
+        [HttpTool getUrlWithString:[NSString stringWithFormat:@"https://www.tking.cn/showapi/mobile/pub/site/1009/active_show?isSupportSession=1&length=10&locationCityOID=%@&offset=%ld&seq=desc&siteCityOID=%@&sorting=weight&src=ios&ver=4.1.0",cityOID,(long)_offset,cityOID] parameters:nil success:^(id responseObject) {
+            if (responseObject) {
+                //            NSLog(@"%@",responseObject);
+                NSDictionary *dict = responseObject[@"result"];
+                NSArray *array = dict[@"data"];
+                for (NSDictionary *dataDict in array) {
+                    STShowModel *cell = [STShowModel yy_modelWithDictionary:dataDict];
+                    if (cell) {
+                        [data addObject:cell];
+                    }
+                }
+                [self.dataArray addObjectsFromArray:data];
+                [_tableView reloadData];
+                
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+
+    } else {
+        [HttpTool getUrlWithString:[NSString stringWithFormat:@"https://www.tking.cn/showapi/mobile/pub/site/1009/active_show?isSupportSession=1&length=10&locationCityOID=%@&offset=%ld&seq=desc&siteCityOID=%@&sorting=weight&src=ios&type=%ld&ver=4.1.0",cityOID,(long)_offset,cityOID,(long)typeNumber] parameters:nil success:^(id responseObject) {
+            if (responseObject) {
+                //            NSLog(@"%@",responseObject);
+                NSDictionary *dict = responseObject[@"result"];
+                NSArray *array = dict[@"data"];
+                for (NSDictionary *dataDict in array) {
+                    STShowModel *cell = [STShowModel yy_modelWithDictionary:dataDict];
+                    if (cell) {
+                        [data addObject:cell];
+                    }
+                }
+                [self.dataArray addObjectsFromArray:data];
+                [_tableView reloadData];
+                
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
 }
 
 - (void)loadNewData {
+    _offset = 0;
+    [self.dataArray removeAllObjects];
+    [self getData];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [_tableView.mj_header endRefreshing];
     });
@@ -132,6 +211,13 @@
     vc.model = self.dataArray[indexPath.row];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (NSString *)getCurrentTimeInterVal {
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    return timeSp;
 }
 
 @end

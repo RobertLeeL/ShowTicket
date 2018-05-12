@@ -35,7 +35,7 @@
 }
 
 - (instancetype)init {
-    if (self ) {
+    if (self) {
         self = [super init];
         self.manager = [[CLLocationManager alloc]init];
         if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0) {

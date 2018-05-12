@@ -144,7 +144,7 @@
         _showDateLabel.text = _model.showDate;
         _showLocation.text = _model.venueName;
         _price.text = [NSString stringWithFormat:@"%@元起",_model.minPrice];
-        _descLabel.text = _model.advertise ? _model.advertise : @"去现场为所爱";
+        _descLabel.text = _model.advertise.length ? _model.advertise : @"去现场为所爱";
     }
 }
 

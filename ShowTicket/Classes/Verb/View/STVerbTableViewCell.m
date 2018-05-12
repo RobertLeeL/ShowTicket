@@ -97,7 +97,7 @@
 }
 
 - (void)didSelected {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectMoreButton)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectMoreButtonAtIndexPath:)]) {
         [self.delegate didSelectMoreButtonAtIndexPath:self.indexPath];
     }
 }

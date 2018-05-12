@@ -70,6 +70,7 @@
 		07C425F520A6BBE900EDEF49 /* STSearchNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C425F420A6BBE900EDEF49 /* STSearchNavBarView.m */; };
 		07C425FB20A6BC8C00EDEF49 /* STSearchResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C425FA20A6BC8C00EDEF49 /* STSearchResultView.m */; };
 		07C425FE20A6BCC200EDEF49 /* STSearchHotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C425FD20A6BCC200EDEF49 /* STSearchHotView.m */; };
+		07C4260220A722E500EDEF49 /* STDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C4260120A722E500EDEF49 /* STDataBase.m */; };
 		07FCE0C8208CB70400304C72 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FCE0C7208CB70400304C72 /* UIColor+Hex.m */; };
 		07FCE0CB208CB76700304C72 /* UIView+layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FCE0CA208CB76700304C72 /* UIView+layout.m */; };
 		07FCE0CE208CB90C00304C72 /* UIImage+color.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FCE0CD208CB90C00304C72 /* UIImage+color.m */; };
@@ -222,6 +223,8 @@
 		07C425FC20A6BCC200EDEF49 /* STSearchHotView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STSearchHotView.h; sourceTree = "<group>"; };
 		07C425FD20A6BCC200EDEF49 /* STSearchHotView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STSearchHotView.m; sourceTree = "<group>"; };
 		07C425FF20A6BDAA00EDEF49 /* common_define.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common_define.h; sourceTree = "<group>"; };
+		07C4260020A722E500EDEF49 /* STDataBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STDataBase.h; sourceTree = "<group>"; };
+		07C4260120A722E500EDEF49 /* STDataBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STDataBase.m; sourceTree = "<group>"; };
 		07FCE0C6208CB70400304C72 /* UIColor+Hex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
 		07FCE0C7208CB70400304C72 /* UIColor+Hex.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		07FCE0C9208CB76700304C72 /* UIView+layout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+layout.h"; sourceTree = "<group>"; };
@@ -537,6 +540,8 @@
 				07893B2020A33EDA0092753C /* STBannerInformation.m */,
 				07893B2220A340220092753C /* STBannerType.h */,
 				07893B2320A340220092753C /* STBannerType.m */,
+				07C4260020A722E500EDEF49 /* STDataBase.h */,
+				07C4260120A722E500EDEF49 /* STDataBase.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -890,6 +895,7 @@
 				07893B6220A4BC150092753C /* STDetailHeadView.m in Sources */,
 				07A5AE24206942F500D90D99 /* STMineViewController.m in Sources */,
 				07893AE220A015050092753C /* JFLocation.m in Sources */,
+				07C4260220A722E500EDEF49 /* STDataBase.m in Sources */,
 				07A5AE2A2069434000D90D99 /* STNavigationViewController.m in Sources */,
 				07893B7E20A5D69F0092753C /* NSObject+BARunTime.m in Sources */,
 				07893B3020A352BC0092753C /* STDiscoveryTableViewCell.m in Sources */,

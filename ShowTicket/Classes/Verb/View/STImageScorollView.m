@@ -31,7 +31,7 @@
         _scrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height / 2) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
         _scrollView.currentPageDotColor = [UIColor whiteColor];
         [self addSubview:_scrollView];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             _scrollView.imageURLStringsGroup = self.imagesURLStrings;
         });
         
