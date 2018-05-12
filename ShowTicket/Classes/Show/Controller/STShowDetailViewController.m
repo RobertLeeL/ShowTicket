@@ -42,7 +42,6 @@
 static char kWRStatusBarStyleKey;
 
 
-
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth,ScreenHeight - 44 ) style:UITableViewStyleGrouped];
@@ -72,7 +71,7 @@ static char kWRStatusBarStyleKey;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self configNavBar];
-    
+    self.navigationController.navigationBar.hidden = NO;
 }
 
 

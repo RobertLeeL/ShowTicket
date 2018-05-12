@@ -11,6 +11,13 @@
 #import <Masonry.h>
 #import <sys/utsname.h>
 #import "UIView+layout.h"
+#import "HttpTool.h"
+#import "STShowTableViewCell.h"
+#import <YYModel.h>
+#import "STShowInformation.h"
+#import "UIViewController+showHUD.h"
+#import <MJRefresh.h>
+#import "STShowDetailViewController.h"
 
 #define ScreenBounds [[UIScreen mainScreen] bounds]
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
@@ -29,17 +36,63 @@
 @property (nonatomic, strong) JTCalendarManager *calendarManager;
 @property (nonatomic, strong) JTHorizontalCalendarView *calendarContentView;
 @property (nonatomic, strong) UILabel *monthLabel;
+@property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) NSMutableArray *headerImages;
 
 @end
 
 @implementation STCalendarViewController
 
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = YES;
+}
+
+- (NSMutableArray *)headerImages {
+    if (!_headerImages) {
+        _headerImages = [[NSMutableArray alloc] init];
+    }
+    return _headerImages;
+}
+
+- (UITableView *)showTableView {
+    if (!_showTableView) {
+        _showTableView = [[UITableView alloc] init];
+        _showTableView.delegate = self;
+        _showTableView.dataSource = self;
+        _showTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        for (int i = 1;i < 14; i++) {
+            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pull_refresh_logo_%d",i]];
+            [self.headerImages addObject:image];
+        }
+        MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+        // Set the ordinary state of animated images
+        [header setImages:self.headerImages forState:MJRefreshStateIdle];
+        // Set the pulling state of animated images（Enter the status of refreshing as soon as loosen）
+        [header setImages:self.headerImages forState:MJRefreshStatePulling];
+        // Set the refreshing state of animated images
+        [header setImages:self.headerImages forState:MJRefreshStateRefreshing];
+        // Set header
+        header.lastUpdatedTimeLabel.hidden = YES;
+        header.stateLabel.hidden = YES;
+        _showTableView.mj_header = header;
+        _showTableView.backgroundColor = [UIColor whiteColor];
+    }
+    return _showTableView;
+}
+
+- (NSMutableArray *)dataArray {
+    if (!_dataArray) {
+        _dataArray = [[NSMutableArray alloc] init];
+    }
+    return _dataArray;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.hidden = YES;
+    
     [self configUI];
     _calendarManager = [[JTCalendarManager alloc] init];
     _calendarManager.delegate = self;
@@ -59,6 +112,9 @@
     }
     NSDate *date = _calendarManager.date;
     _monthLabel.text = [dateFormatter stringFromDate:date];
+    
+    
+    [self getData];
     // Do any additional setup after loading the view.
 }
 
@@ -67,19 +123,52 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)loadNewData {
+    [self getData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [_showTableView.mj_header endRefreshing];
+    });
+}
+
+- (void)getData {
+    [self.dataArray removeAllObjects];
+    NSMutableArray *data = [[NSMutableArray alloc] init];
+    [HttpTool getUrlWithString:@"https://www.tking.cn/showapi/mobile/pub/site/1009/calendarShow?fromDate=1526054400000&isSupportSession=1&length=10&offset=0&siteCityOID=1101&src=ios&ver=4.1.0" parameters:nil success:^(id responseObject) {
+        if (responseObject) {
+            //            NSLog(@"%@",responseObject);
+            NSDictionary *dict = responseObject[@"result"];
+            NSArray *array = dict[@"data"];
+            for (NSDictionary *dataDict in array) {
+                STShowInformation *cell = [STShowInformation yy_modelWithDictionary:dataDict];
+                if (cell) {
+                    [data addObject:cell];
+                }
+            }
+            [self.dataArray addObjectsFromArray:data];
+            [_showTableView reloadData];
+            if (!self.dataArray.count) {
+                [self showHUD:@"该日期无演出"];
+            }
+            
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
 - (void)configUI {
-    UIButton *calendarButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [calendarButton setImage:[UIImage imageNamed:@"navigationButtonReturn"] forState:UIControlStateNormal];
-    [calendarButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:calendarButton];
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backButton setImage:[UIImage imageNamed:@"navigationButtonReturn"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backButton];
     CGFloat safeHeight = 0;
 //    if ([[self iphoneType] isEqualToString:@"iPhone X"]) {
 //        safeHeight = 24;
 //    }
-    if ([[self iphoneType] isEqualToString:@"iPhone Simulator"]) {
+    if ([[self iphoneType] isEqualToString:@"iPhone X"]) {
         safeHeight = 24;
     }
-    [calendarButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [backButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left).mas_offset(5);
         make.top.mas_equalTo(self.view.mas_top).mas_offset(safeHeight + 20);
         make.width.mas_equalTo(40);
@@ -91,10 +180,10 @@
     _monthLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_monthLabel];
     [_monthLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(calendarButton.mas_right).mas_offset(30);
+        make.left.equalTo(backButton.mas_right).mas_offset(30);
         make.right.equalTo(self.view.mas_right).mas_offset(-70);
         make.top.equalTo(self.view.mas_top).mas_offset(safeHeight + 20);
-        make.height.equalTo(calendarButton.mas_height);
+        make.height.equalTo(backButton.mas_height);
     }];
     
     _calendarManager.settings.weekDayFormat = JTCalendarWeekDayFormatSingle;
@@ -110,11 +199,7 @@
         make.height.mas_equalTo(200);
     }];
     
-    _showTableView = [[UITableView alloc] init];
-    _showTableView.delegate = self;
-    _showTableView.dataSource = self;
-    _showTableView.backgroundColor = [UIColor grayColor];
-    [self.view addSubview:_showTableView];
+    [self.view addSubview:self.showTableView];
     
     [_showTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(_calendarContentView.mas_bottom);
@@ -137,6 +222,8 @@
 - (void)createMinAndMaxDate
 {
     _todayDate = [NSDate date];
+    
+    _dateSelected = [NSDate date];
     
     // Min date will be 0 month before today
     _minDate = [_calendarManager.dateHelper addToDate:_todayDate months:0];
@@ -175,7 +262,7 @@
     // Another day of the current month
     else{
         dayView.circleView.hidden = YES;
-        dayView.dotView.backgroundColor = [UIColor redColor];
+//        dayView.dotView.backgroundColor = [UIColor redColor];
         dayView.textLabel.textColor = [UIColor blackColor];
     }
     
@@ -200,6 +287,8 @@
     if(_calendarManager.settings.weekModeEnabled){
         return;
     }
+    
+    
     
     // Load the previous or next page if touch a day from another month
 }
@@ -233,6 +322,54 @@
     NSDate *date = calendar.date;
     _monthLabel.text = [dateFormatter stringFromDate:date];
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.dataArray.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 150;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellID = @"calendarCell";
+    STShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (!cell) {
+        cell = [[STShowTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell initWithModel:self.dataArray[indexPath.row]];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    STShowDetailViewController *vc = [[STShowDetailViewController alloc] init];
+    vc.model = self.dataArray[indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    CGFloat offsetY = scrollView.contentOffset.y;
+//    NSLog(@"%f",offsetY);
+//    if (offsetY > 0) {
+//        _calendarManager.settings.weekModeEnabled = YES;
+//        [_calendarManager reload];
+//        [_calendarContentView mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.height.mas_equalTo(55);
+//        }];
+//        [self.view layoutIfNeeded];
+//    } else {
+//        _calendarManager.settings.weekModeEnabled = NO;
+//        [_calendarManager reload];
+//        [_calendarContentView mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.height.mas_equalTo(200);
+//        }];
+//        [self.view layoutIfNeeded];
+//    }
+//}
+
+
 - (NSString*)iphoneType {
     
     //需要导入头文件：#import <sys/utsname.h>

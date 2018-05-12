@@ -350,9 +350,9 @@
         STVerbTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
         if (!cell) {
             cell = [[STVerbTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
         }
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (indexPath.row == 0) {
             cell.typeLabel.text = self.titleLabelArray[indexPath.row];
             cell.indexPath = indexPath;
