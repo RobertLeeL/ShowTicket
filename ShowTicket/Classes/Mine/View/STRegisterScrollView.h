@@ -1,5 +1,5 @@
 //
-//  STLoginViewController.h
+//  STRegisterScrollView.h
 //  ShowTicket
 //
 //  Created by 李龙跃 on 2018/5/16.
@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
-@interface STLoginViewController : UIViewController
+@interface STRegisterScrollView : UIScrollView
 
 @end

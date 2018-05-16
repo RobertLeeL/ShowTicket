@@ -1,14 +1,17 @@
 //
-//  STLoginViewController.h
+//  NSString+check.h
 //  ShowTicket
 //
 //  Created by 李龙跃 on 2018/5/16.
 //  Copyright © 2018年 Longyue Li. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
+@interface NSString (check)
 
-@interface STLoginViewController : UIViewController
+- (BOOL)checkPhoneNumer;
+
+- (BOOL)checkEmail;
 
 @end

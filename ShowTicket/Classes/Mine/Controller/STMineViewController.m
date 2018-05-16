@@ -12,6 +12,8 @@
 #import "UIView+layout.h"
 #import "UIBarButtonItem+initItem.h"
 #import "STLoginViewController.h"
+#import "STUserInfoViewController.h"
+#import "UIViewController+showHUD.h"
 
 #define ScreenBounds [[UIScreen mainScreen] bounds]
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
@@ -45,12 +47,14 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults]objectForKey:@"currentUserInfo"];
+    NSLog(@"%@",dict);
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess) name:@"loginSuccess" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(canceldUser) name:@"canceldUser" object:nil];
     [self setup];
 }
 
@@ -133,10 +137,32 @@
 
 - (void)clickButtonWithTag:(NSInteger)tag {
     if (tag == 51) {
-        [self.headerView.button setTitle:@"你好李龙跃" forState:UIControlStateNormal];
-    }if (tag == 49) {
-        [self presentViewController:[[STLoginViewController alloc] init] animated:YES completion:nil];
+        [self showHUD:@"点击聊天"];
+    }else if (tag == 49) {
+        NSDictionary *dict = [[NSUserDefaults standardUserDefaults]objectForKey:@"currentUserInfo"];
+        if (dict[@"phoneNumber"]) {
+            [self.navigationController pushViewController:[[STUserInfoViewController alloc] init] animated:YES];
+        } else {
+            [self presentViewController:[[STLoginViewController alloc] init] animated:YES completion:nil];
+        }
     }
+    else if (tag == 50) {
+        [self showHUD:@"点击设置"];
+    } else {
+        [self showHUD:@"点击按钮"];
+    }
+    
+}
+
+- (void)loginSuccess {
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults]objectForKey:@"currentUserInfo"];
+    [self.headerView.button setTitle:dict[@"userName"] forState:UIControlStateNormal];
+    [self.headerView.headImageView setImage:[UIImage imageNamed:@"icon_share_zhifubao"]];
+}
+
+- (void)canceldUser {
+    [self.headerView.button setTitle:@"点击登录/注册" forState:UIControlStateNormal];
+    [self.headerView.headImageView setImage:[UIImage imageNamed:@"my_head"]];
 }
 
 @end

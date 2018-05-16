@@ -16,5 +16,6 @@
 @interface STMineHeaderView : UIView
 @property (weak, nonatomic) UIImageView *bgView;
 @property (weak, nonatomic) UIButton *button;
+@property (weak , nonatomic) UIImageView *headImageView;
 @property (nonatomic, weak) id<STMineHeaderViewDelegate> delegate;
 @end
