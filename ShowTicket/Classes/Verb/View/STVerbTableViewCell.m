@@ -53,7 +53,7 @@
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         layout.minimumLineSpacing = 10;
-        layout.itemSize = CGSizeMake(90, 200);
+        layout.itemSize = CGSizeMake(80, 200);
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 40,ScreenWidth , 200) collectionViewLayout:layout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;

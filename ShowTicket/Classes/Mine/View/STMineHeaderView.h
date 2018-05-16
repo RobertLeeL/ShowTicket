@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol STMineHeaderViewDelegate <NSObject>
+- (void)clickButtonWithTag:(NSInteger)tag;
+
+@end
+
 @interface STMineHeaderView : UIView
 @property (weak, nonatomic) UIImageView *bgView;
+@property (weak, nonatomic) UIButton *button;
+@property (nonatomic, weak) id<STMineHeaderViewDelegate> delegate;
 @end

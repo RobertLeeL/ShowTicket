@@ -30,6 +30,7 @@
 
 - (void)setup {
     _image = [[UIImageView alloc] init];
+    _image.contentMode = UIViewContentModeScaleAspectFit;
     _showName = [[UILabel alloc] init];
     _showName.textColor = [UIColor blackColor];
     _showDate = [[UILabel alloc] init];
@@ -74,7 +75,7 @@
     if (_model) {
         NSURL *url = [NSURL URLWithString:_model.posterURL];
         [_image sd_setImageWithURL:url];
-        _image.contentMode = UIViewContentModeScaleAspectFill;
+        _image.contentMode = UIViewContentModeScaleAspectFit;
         
         _showName.text = model.showName;
         _showName.numberOfLines = 2;

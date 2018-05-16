@@ -71,6 +71,8 @@
 		07C425FB20A6BC8C00EDEF49 /* STSearchResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C425FA20A6BC8C00EDEF49 /* STSearchResultView.m */; };
 		07C425FE20A6BCC200EDEF49 /* STSearchHotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C425FD20A6BCC200EDEF49 /* STSearchHotView.m */; };
 		07C4260220A722E500EDEF49 /* STDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C4260120A722E500EDEF49 /* STDataBase.m */; };
+		07C4260520AB624900EDEF49 /* STLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C4260420AB624900EDEF49 /* STLoginViewController.m */; };
+		07C4260720AB66B300EDEF49 /* register_guide_video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 07C4260620AB66B200EDEF49 /* register_guide_video.mp4 */; };
 		07FCE0C8208CB70400304C72 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FCE0C7208CB70400304C72 /* UIColor+Hex.m */; };
 		07FCE0CB208CB76700304C72 /* UIView+layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FCE0CA208CB76700304C72 /* UIView+layout.m */; };
 		07FCE0CE208CB90C00304C72 /* UIImage+color.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FCE0CD208CB90C00304C72 /* UIImage+color.m */; };
@@ -225,6 +227,9 @@
 		07C425FF20A6BDAA00EDEF49 /* common_define.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common_define.h; sourceTree = "<group>"; };
 		07C4260020A722E500EDEF49 /* STDataBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STDataBase.h; sourceTree = "<group>"; };
 		07C4260120A722E500EDEF49 /* STDataBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STDataBase.m; sourceTree = "<group>"; };
+		07C4260320AB624900EDEF49 /* STLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STLoginViewController.h; sourceTree = "<group>"; };
+		07C4260420AB624900EDEF49 /* STLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STLoginViewController.m; sourceTree = "<group>"; };
+		07C4260620AB66B200EDEF49 /* register_guide_video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = register_guide_video.mp4; sourceTree = "<group>"; };
 		07FCE0C6208CB70400304C72 /* UIColor+Hex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
 		07FCE0C7208CB70400304C72 /* UIColor+Hex.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		07FCE0C9208CB76700304C72 /* UIView+layout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+layout.h"; sourceTree = "<group>"; };
@@ -507,6 +512,7 @@
 		07A5AE0E206940D100D90D99 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				07C4260620AB66B200EDEF49 /* register_guide_video.mp4 */,
 				07A5AE1B2069415400D90D99 /* Model */,
 				07A5AE1A2069414600D90D99 /* View */,
 				07A5AE192069413F00D90D99 /* Controller */,
@@ -659,6 +665,8 @@
 			children = (
 				07A5AE22206942F500D90D99 /* STMineViewController.h */,
 				07A5AE23206942F500D90D99 /* STMineViewController.m */,
+				07C4260320AB624900EDEF49 /* STLoginViewController.h */,
+				07C4260420AB624900EDEF49 /* STLoginViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -814,6 +822,7 @@
 				07893AEB20A015050092753C /* shop_area.sqlite in Resources */,
 				07A5ADD7205FEA3800D90D99 /* LaunchScreen.storyboard in Resources */,
 				07A5ADD4205FEA3800D90D99 /* Assets.xcassets in Resources */,
+				07C4260720AB66B300EDEF49 /* register_guide_video.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -929,6 +938,7 @@
 				07893B6820A588770092753C /* STDetailBottomView.m in Sources */,
 				07893B2A20A34CBD0092753C /* UIBarButtonItem+initItem.m in Sources */,
 				07893AE520A015050092753C /* JFSearchView.m in Sources */,
+				07C4260520AB624900EDEF49 /* STLoginViewController.m in Sources */,
 				07893AE920A015050092753C /* JFButton.m in Sources */,
 				07A5AE272069430700D90D99 /* STDiscoveryViewController.m in Sources */,
 				07893B4E20A493A90092753C /* STShowDetailViewController.m in Sources */,

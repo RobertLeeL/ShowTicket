@@ -11,12 +11,13 @@
 #import "UIColor+Hex.h"
 #import "UIView+layout.h"
 #import "UIBarButtonItem+initItem.h"
+#import "STLoginViewController.h"
 
 #define ScreenBounds [[UIScreen mainScreen] bounds]
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
 
-@interface STMineViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface STMineViewController ()<UITableViewDelegate,UITableViewDataSource,STMineHeaderViewDelegate>
 @property (weak, nonatomic) UITableView *tableView;
 @property (copy, nonatomic) NSArray *titles;
 @property (copy, nonatomic) NSArray *images;
@@ -41,10 +42,15 @@
     return _images;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationController.navigationBar.hidden = YES;
+    
     [self setup];
 }
 
@@ -72,6 +78,7 @@
     headerView.height = 150;
     self.tableView.tableHeaderView = headerView;
     self.headerView = headerView;
+    self.headerView.delegate = self;
 }
 
 - (void)navItemClick:(UIBarButtonItem *)button
@@ -123,14 +130,13 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)clickButtonWithTag:(NSInteger)tag {
+    if (tag == 51) {
+        [self.headerView.button setTitle:@"你好李龙跃" forState:UIControlStateNormal];
+    }if (tag == 49) {
+        [self presentViewController:[[STLoginViewController alloc] init] animated:YES completion:nil];
+    }
 }
-*/
 
 @end

@@ -15,8 +15,9 @@
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
 
 @interface STMineHeaderView ()
-@property (weak, nonatomic) UIButton *button;
 @property (weak, nonatomic) UIView *bottomView;
+@property (nonatomic, weak) UIButton *message;
+@property (nonatomic, weak) UIButton *setting;
 @end
 
 @implementation STMineHeaderView
@@ -45,11 +46,28 @@
     button.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     button.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     button.size = button.currentImage.size;
+    [button addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
+    button.tag = 49;
     [self addSubview:button];
     self.button = button;
     
+    UIButton *message = [UIButton buttonWithType:UIButtonTypeCustom];
+    [message setImage:[UIImage imageNamed:@"my_message"] forState:UIControlStateNormal];
+    message.tag = 50;
+    [self addSubview:message];
+    [message addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.message = message;
+    
+    UIButton *setting = [UIButton buttonWithType:UIButtonTypeCustom];
+    [setting setImage:[UIImage imageNamed:@"my_setting"] forState:UIControlStateNormal];
+    setting.tag = 51;
+    [self addSubview:setting];
+    [setting addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.setting = setting;
+    
     UIView *bottomView = [[UIView alloc] init];
     bottomView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
+    
     [self addSubview:bottomView];
     self.bottomView = bottomView;
     
@@ -63,6 +81,8 @@
     couponBtn.height = 50;
     couponBtn.x = 0;
     couponBtn.y = 0;
+    couponBtn.tag = 52;
+    [couponBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:couponBtn];
     
     UIButton *integralBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -75,11 +95,23 @@
     integralBtn.height = 50;
     integralBtn.x = ScreenWidth / 2;
     integralBtn.y = 0;
+    integralBtn.tag = 53;
+    [integralBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:integralBtn];
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(ScreenWidth / 2 - 0.5, 10, 1, 30)];
     lineView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
     [bottomView addSubview:lineView];
+}
+
+
+- (void)clickButton:(id)sender {
+    UIButton *button = sender;
+    NSInteger tag = button.tag;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickButtonWithTag:)]) {
+        [self.delegate clickButtonWithTag:tag];
+    }
+    NSLog(@"%ld",(long)tag);
 }
 
 - (void)layoutSubviews
@@ -95,6 +127,16 @@
     self.bottomView.y = self.height - 50;
     self.bottomView.width = ScreenWidth;
     self.bottomView.height = 50;
+    self.message.x = self.bounds.size.width - 80;
+    self.message.y = 0;
+    self.message.width = 40;
+    self.message.height = 40;
+    
+    self.setting.x = self.message.x + 35;
+    self.setting.y = self.message.y;
+    self.setting.width = 40;
+    self.setting.height = 40;
+    
 }
 /*
 // Only override drawRect: if you perform custom drawing.
